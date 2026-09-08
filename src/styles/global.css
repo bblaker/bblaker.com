@@ -329,6 +329,56 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .verdict + .verdict { margin-top: 10px; }
 .verdict strong { color: var(--text); font-weight: 500; }
 
+/* ------------------------------------------------------------------ media --
+   Images get the same treatment as everything else: hairline border, 2px
+   radius, no shadow. Captions are mono, like all other metadata. */
+.fig { display: flex; flex-direction: column; gap: 9px; }
+.fig img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface);
+}
+.fig figcaption {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* A wide figure breaks out of the prose column on roomy viewports. */
+.fig[data-wide] { width: 100%; }
+@media (min-width: 1000px) {
+  .prose .fig[data-wide], .mdx .fig[data-wide] { width: calc(100% + 180px); margin-left: -90px; }
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--gallery-min, 240px), 1fr));
+  gap: 12px;
+}
+
+/* Bare markdown images — ![alt](./shot.jpg) — get the frame without a caption. */
+.prose > p > img, .mdx > p > img {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface);
+}
+
+/* Project hero: one wide image under the header, before the body. */
+.proj-hero { margin-top: 26px; }
+.proj-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface);
+}
+
 /* --------------------------------------------------------------- filters -- */
 .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-bottom: 22px; }
 .filters a {

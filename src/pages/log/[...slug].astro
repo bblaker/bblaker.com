@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render, getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '~/layouts/Base.astro';
 import { mdxComponents } from '~/components/mdx';
 import { allPosts, devlogIndex, type Post } from '~/lib/content';
@@ -39,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const { post, n, projectId, newer, older } = Astro.props;
-const { title, date, updated, kind, summary, tags } = post.data;
+const { title, date, updated, kind, summary, tags, cover, coverAlt } = post.data;
 const { Content } = await render(post);
 const project = projectId ? await getEntry('projects', projectId) : undefined;
 ---
@@ -67,6 +68,12 @@ const project = projectId ? await getEntry('projects', projectId) : undefined;
 
     <h1>{title}</h1>
     <p class="post-lede">{summary}</p>
+
+    {cover && (
+      <div class="proj-hero" style="margin-top:24px">
+        <Image src={cover} alt={coverAlt ?? title} widths={[680, 1360]} sizes="(max-width: 760px) 100vw, 680px" loading="eager" />
+      </div>
+    )}
 
     <div class="prose">
       <Content components={mdxComponents} />

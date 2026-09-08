@@ -20,8 +20,8 @@ export type Status = (typeof STATUSES)[number];
 export type Effort = (typeof EFFORTS)[number];
 
 const projects = defineCollection({
-  loader: glob({ base: './content/projects', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
+  loader: glob({ base: './content/projects', pattern: '*.{md,mdx}' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
     /** One line. Used on cards, the project header, and OG descriptions. */
     tagline: z.string(),
@@ -44,13 +44,20 @@ const projects = defineCollection({
     /** Ordered key/value spec sheet. Rendered with dot leaders in the rail. */
     spec: z.array(z.object({ k: z.string(), v: z.string() })).default([]),
 
+    /**
+     * Optional wide hero, shown once at the top of the project page only.
+     * Deliberately not used on cards or indexes — those stay text-dense.
+     */
+    cover: image().optional(),
+    coverAlt: z.string().optional(),
+
     draft: z.boolean().default(false),
   }),
 });
 
 const posts = defineCollection({
-  loader: glob({ base: './content/posts', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
+  loader: glob({ base: './content/posts', pattern: '*.{md,mdx}' }),
+  schema: ({ image }) => z.object({
     title: z.string(),
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
@@ -61,6 +68,10 @@ const posts = defineCollection({
     tags: z.array(z.string()).default([]),
     /** Required, not optional. It's the list copy, the RSS body and the OG text. */
     summary: z.string(),
+
+    cover: image().optional(),
+    coverAlt: z.string().optional(),
+
     draft: z.boolean().default(false),
   }),
 });

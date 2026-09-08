@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * A grid of images for build logs. Captions optional per item.
+ *
+ *   import a from './images/a.jpg';
+ *   import b from './images/b.jpg';
+ *   <Gallery items={[{ src: a, alt: '…' }, { src: b, alt: '…', caption: '…' }]} />
+ */
+interface Item {
+  src: ImageMetadata | string;
+  alt: string;
+  caption?: string;
+}
+interface Props {
+  items: Item[];
+  /** Minimum column width. Lower it for many small detail shots. */
+  min?: number;
+}
+const { items, min = 240 } = Astro.props;
+---
+<div class="gallery" style={`--gallery-min:${min}px`}>
+  {items.map((item) => (
+    <figure class="fig">
+      {typeof item.src === 'string'
+        ? <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+        : <Image src={item.src} alt={item.alt} widths={[320, 640]} sizes={`${min}px`} loading="lazy" decoding="async" />}
+      {item.caption && <figcaption>{item.caption}</figcaption>}
+    </figure>
+  ))}
+</div>

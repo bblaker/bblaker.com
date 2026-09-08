@@ -81,8 +81,22 @@ Available in any post or project body without importing — they're passed via
 | `<Spec rows={[{k,v}]} />` | Inline dot-leader datasheet |
 | `<BOM items={[{qty,part,source,href,cost}]} />` | Bill of materials, totals computed |
 
-Still to build: `<Stl>` (three.js viewer — the reason `@astrojs/react` is installed),
-`<Gallery>`, `<Diagram>`.
+| `<Figure src={img} alt="…" caption="…" />` | One image with a mono caption. `wide` breaks the text column |
+| `<Gallery items={[{src, alt, caption}]} />` | Grid of images for build logs |
+
+Still to build: `<Stl>` (three.js viewer — the reason `@astrojs/react` is installed)
+and `<Diagram>`.
+
+## Images
+
+Drop files in `content/projects/images/` or `content/posts/images/` and reference them
+relative to the `.mdx` file. **Import them rather than using string paths** — imported
+images get WebP conversion, responsive `srcset`, and `width`/`height` attributes that
+prevent layout shift. See the README in either folder for the patterns.
+
+Images appear on project pages (one optional `cover` hero) and inside post bodies. They
+are deliberately absent from cards and indexes: those stay text-dense so they scan, and
+a grid of cover thumbnails would make `/projects` look like every other portfolio.
 
 ## Design system
 
