@@ -1,0 +1,25 @@
+---
+import Base from '~/layouts/Base.astro';
+import SpecTable from '~/components/SpecTable.astro';
+
+const rows = [
+  { k: 'Status', v: '404 Not Found' },
+  { k: 'Cause', v: 'No route matched' },
+  { k: 'Retryable', v: 'No' },
+  { k: 'Next', v: 'Try /projects/ or /log/' },
+];
+---
+<Base title="404" description="That page doesn't exist.">
+  <article class="post-wrap" style="padding-top:64px">
+    <p class="post-meta"><span>Error</span></p>
+    <h1>No route matched.</h1>
+    <p class="post-lede">
+      That URL doesn't resolve to anything. It may have moved, or it may never have existed —
+      this site is static, so there's no server-side redirect to fall back on.
+    </p>
+    <div style="margin-top:28px"><SpecTable rows={rows} /></div>
+    <p style="margin-top:34px">
+      <a href="/">Home</a> · <a href="/projects/">Projects</a> · <a href="/log/">Log</a>
+    </p>
+  </article>
+</Base>

@@ -1,0 +1,14 @@
+---
+title: drift
+tagline: Continuous Terraform drift detection that correlates against your own apply history, so a change you made doesn't wake anyone up.
+domain: software
+status: planned
+effort: M
+weight: 64
+stack: [Go, Postgres, NATS, Terraform]
+tags: [go, terraform, sre]
+---
+
+Plain drift detection already exists and is mostly noise. The idea here is correlation:
+a diff that matches a recent apply from a known actor is explained, and explained drift
+shouldn't page. Everything else should, loudly.

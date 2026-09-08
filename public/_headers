@@ -1,0 +1,13 @@
+# Cloudflare Pages response headers. Rules merge in order, so the specific
+# asset rule below intentionally overrides the Cache-Control set in /*.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Astro fingerprints these filenames, so they can be cached forever.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

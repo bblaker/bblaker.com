@@ -1,0 +1,17 @@
+---
+import type { Domain, Status } from '~/content.config';
+
+interface Props {
+  domain?: Domain;
+  status?: Status;
+  label?: string;
+  /** Status and domain chips carry a dot; plain informational chips don't. */
+  dot?: boolean;
+}
+const { domain, status, label, dot } = Astro.props;
+const text = label ?? domain ?? status ?? '';
+const showDot = dot ?? Boolean(domain || status);
+---
+<span class="chip" data-domain={domain} data-status={status}>
+  {showDot && <i class="dot" aria-hidden="true"></i>}{text}
+</span>

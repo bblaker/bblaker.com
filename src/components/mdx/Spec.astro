@@ -1,0 +1,11 @@
+---
+import SpecTable from '~/components/SpecTable.astro';
+
+/** Inline datasheet block for use inside a post body. */
+interface Props { title?: string; rows: { k: string; v: string }[] }
+const { title = 'Spec', rows } = Astro.props;
+---
+<div class="cmp" style="padding:15px">
+  <div class="rt" style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px">{title}</div>
+  <SpecTable rows={rows} />
+</div>

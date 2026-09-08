@@ -1,0 +1,98 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render, getEntry } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import { mdxComponents } from '~/components/mdx';
+import { allPosts, devlogIndex, type Post } from '~/lib/content';
+import { isoDate, readingTime } from '~/lib/format';
+
+interface Props {
+  post: Post;
+  n?: number;
+  projectId?: string;
+  newer?: Post;
+  older?: Post;
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await allPosts();
+  const dl = await devlogIndex();
+
+  return posts.map((post) => {
+    const meta = dl.get(post.id);
+    /** Prev/next walk the parent project's sequence, not the global stream. */
+    const siblings = meta
+      ? posts.filter((p) => p.data.project?.id === meta.projectId)
+      : posts;
+    const i = siblings.findIndex((p) => p.id === post.id);
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        n: meta?.n,
+        projectId: meta?.projectId,
+        newer: i > 0 ? siblings[i - 1] : undefined,
+        older: i < siblings.length - 1 ? siblings[i + 1] : undefined,
+      },
+    };
+  });
+};
+
+const { post, n, projectId, newer, older } = Astro.props;
+const { title, date, updated, kind, summary, tags } = post.data;
+const { Content } = await render(post);
+const project = projectId ? await getEntry('projects', projectId) : undefined;
+---
+<Base title={title} description={summary} section="log" ogPath={`log/${post.id}`}>
+  <article class="post-wrap">
+    <p class="post-meta">
+      <time datetime={date.toISOString()}>{isoDate(date)}</time>
+      <span class="sep" aria-hidden="true">·</span>
+      <span>{kind}</span>
+      {project && n && (
+        <Fragment>
+          <span class="sep" aria-hidden="true">·</span>
+          <a class="p" href={`/projects/${project.id}/`}>{project.data.title} #{n}</a>
+        </Fragment>
+      )}
+      <span class="sep" aria-hidden="true">·</span>
+      <span>{readingTime(post.body)} min</span>
+      {updated && (
+        <Fragment>
+          <span class="sep" aria-hidden="true">·</span>
+          <span>Updated {isoDate(updated)}</span>
+        </Fragment>
+      )}
+    </p>
+
+    <h1>{title}</h1>
+    <p class="post-lede">{summary}</p>
+
+    <div class="prose">
+      <Content components={mdxComponents} />
+    </div>
+
+    {tags.length > 0 && (
+      <p class="meta" style="margin-top:34px">{tags.map((t) => `#${t}`).join('  ')}</p>
+    )}
+
+    {(newer || older) && (
+      <nav class="prevnext" aria-label="More in this series">
+        <div>
+          {older && (
+            <a href={`/log/${older.id}/`}>
+              <span>Previous</span>{older.data.title}
+            </a>
+          )}
+        </div>
+        <div style="text-align:right">
+          {newer && (
+            <a href={`/log/${newer.id}/`}>
+              <span>Next</span>{newer.data.title}
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </article>
+</Base>

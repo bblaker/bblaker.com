@@ -1,0 +1,35 @@
+---
+/**
+ * A shell transcript. Lines starting with "$ " render as commands, everything
+ * else as output — so you paste a real session and it comes out right.
+ *
+ * The markup is assembled as a string rather than as JSX: inside a <pre>,
+ * template indentation would land in the rendered output as real whitespace.
+ */
+interface Props { title?: string }
+const { title = 'shell' } = Astro.props;
+
+const escape = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const raw = await Astro.slots.render('default');
+const text = raw
+  .replace(/<[^>]+>/g, '')
+  .replace(/&lt;/g, '<')
+  .replace(/&gt;/g, '>')
+  .replace(/&amp;/g, '&')
+  .replace(/^\n+|\n+$/g, '');
+
+const html = text
+  .split('\n')
+  .map((line) =>
+    line.startsWith('$ ')
+      ? `<span class="pr">$ </span><span class="cmd">${escape(line.slice(2))}</span>`
+      : `<span class="out">${escape(line)}</span>`,
+  )
+  .join('\n');
+---
+<div class="cmp">
+  <div class="cmp-bar"><span class="tagname">&lt;Term&gt;</span><span>{title}</span></div>
+  <pre><code set:html={html} /></pre>
+</div>

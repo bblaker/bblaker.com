@@ -1,0 +1,15 @@
+---
+title: slab
+tagline: "SLOs as code: write a spec, get multi-window multi-burn-rate Prometheus alert rules, a Grafana panel, and an error budget you can query."
+domain: software
+status: planned
+effort: M
+weight: 68
+stack: [Go, Prometheus, Grafana, CUE]
+tags: [go, sre, prometheus, slo]
+---
+
+Single-window alerts betray you: too tight and they page on noise, too loose and they
+miss real burn. Multi-window multi-burn-rate fixes that and almost nobody hand-writes
+the rules correctly, because the arithmetic is fiddly. That's exactly the shape of
+problem worth compiling.

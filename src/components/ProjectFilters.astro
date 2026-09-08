@@ -1,0 +1,18 @@
+---
+import type { Domain } from '~/content.config';
+
+interface Props {
+  total: number;
+  counts: { domain: Domain; count: number }[];
+  active?: Domain;
+}
+const { total, counts, active } = Astro.props;
+---
+<nav class="filters" aria-label="Filter projects by domain">
+  <a href="/projects/" aria-current={active ? undefined : 'true'}>All <span class="n">{total}</span></a>
+  {counts.map((c) => (
+    <a href={`/projects/domain/${c.domain}/`} aria-current={active === c.domain ? 'true' : undefined}>
+      {c.domain} <span class="n">{c.count}</span>
+    </a>
+  ))}
+</nav>

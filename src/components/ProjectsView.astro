@@ -1,0 +1,41 @@
+---
+import SectionHead from '~/components/SectionHead.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+import ProjectRow from '~/components/ProjectRow.astro';
+import ProjectFilters from '~/components/ProjectFilters.astro';
+import { isLive, isBacklog, type Project } from '~/lib/content';
+import type { Domain } from '~/content.config';
+
+interface Props {
+  heading: string;
+  blurb: string;
+  projects: Project[];
+  total: number;
+  counts: { domain: Domain; count: number }[];
+  active?: Domain;
+}
+const { heading, blurb, projects, total, counts, active } = Astro.props;
+const live = projects.filter(isLive);
+const backlog = projects.filter(isBacklog);
+---
+<header style="padding:34px 0 20px">
+  <h1 style="font-family:var(--cond);font-weight:700;font-size:clamp(30px,5vw,40px);letter-spacing:-.012em">{heading}</h1>
+  <p style="color:var(--muted);max-width:58ch;margin-top:8px">{blurb}</p>
+</header>
+
+<ProjectFilters total={total} counts={counts} active={active} />
+
+{live.length > 0 && (
+  <div class="card-grid">
+    {live.map((project) => <ProjectCard project={project} />)}
+  </div>
+)}
+
+{backlog.length > 0 && (
+  <section class="section" id="backlog">
+    <SectionHead label="Backlog" count={backlog.length} moreLabel="Not started · effort" />
+    <div class="rows">
+      {backlog.map((project) => <ProjectRow project={project} />)}
+    </div>
+  </section>
+)}

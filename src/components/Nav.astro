@@ -1,0 +1,23 @@
+---
+import { site } from '~/site';
+
+interface Props { section?: string }
+const { section } = Astro.props;
+const items = [
+  { href: '/projects/', label: 'Projects', key: 'projects' },
+  { href: '/log/', label: 'Log', key: 'log' },
+  { href: '/uses/', label: 'Uses', key: 'uses' },
+  { href: '/about/', label: 'About', key: 'about' },
+];
+---
+<nav class="nav">
+  <a class="brand" href="/">{site.wordmark}<span>.</span></a>
+  <ul class="links">
+    {items.map((i) => (
+      <li>
+        <a href={i.href} aria-current={section === i.key ? 'page' : undefined}>{i.label}</a>
+      </li>
+    ))}
+    <li><a href="/rss.xml">RSS</a></li>
+  </ul>
+</nav>

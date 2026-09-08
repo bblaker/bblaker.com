@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  /** Always derived from a query, never hand-written, so it can't go stale. */
+  count?: number;
+  moreHref?: string;
+  moreLabel?: string;
+}
+const { label, count, moreHref, moreLabel } = Astro.props;
+---
+<div class="shead">
+  <span class="lbl">{label}</span>
+  {count !== undefined && <span class="cnt">{count}</span>}
+  <i class="rule" aria-hidden="true"></i>
+  {moreHref
+    ? <a class="more" href={moreHref}>{moreLabel ?? 'All'} →</a>
+    : moreLabel && <span class="more">{moreLabel}</span>}
+</div>

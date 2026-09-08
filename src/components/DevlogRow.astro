@@ -1,0 +1,16 @@
+---
+import { isoDate, readingTime } from '~/lib/format';
+import type { Post } from '~/lib/content';
+
+interface Props { post: Post; n: number }
+const { post, n } = Astro.props;
+---
+<div class="dl-row">
+  <span class="n">#{n}</span>
+  <time class="date" datetime={post.data.date.toISOString()}>{isoDate(post.data.date)}</time>
+  <span class="t">
+    <a href={`/log/${post.id}/`}>{post.data.title}</a>
+    <em>{post.data.summary}</em>
+  </span>
+  <span class="rt">{readingTime(post.body)} min</span>
+</div>

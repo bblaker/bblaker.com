@@ -1,0 +1,41 @@
+---
+title: A benchmark rig before any features
+date: 2026-09-04
+kind: log
+project: ferry
+summary: Building a repeatable 10GbE load harness on hardware I already own, so that later numbers mean something.
+tags: [go, benchmarking, networking]
+---
+
+The temptation with a project like this is to write the interesting part first and
+measure later. That's how you end up with a number you can't reproduce and a graph
+you don't trust.
+
+So: the harness comes first. Two requirements, both boring.
+
+**It has to be repeatable.** Same traffic profile, same duration, same warmup, run from
+a script with no arguments. If I have to remember flags, I'll run it differently in
+three weeks and compare two things that aren't comparable.
+
+**It has to run on hardware I already own.** A benchmark that needs a lab I don't have
+is a benchmark I'll do twice and then stop doing.
+
+<Spec title="The rig" rows={[
+  { k: "Load generator", v: "1 × N100, 2.5GbE" },
+  { k: "Target", v: "Pi 5, 2.5GbE" },
+  { k: "Switch", v: "Managed, mirrored port" },
+  { k: "Traffic", v: "wrk2 + custom UDP" },
+  { k: "Duration", v: "60s, 10s warmup" },
+]} />
+
+## What I'm recording
+
+Requests per second is the least interesting number here and the one everyone quotes.
+What I actually want is the tail — p99 and p99.9 under a *fixed* arrival rate, which is
+why the harness uses `wrk2` rather than `wrk`. Coordinated omission makes the difference
+between a latency graph and a latency fantasy.
+
+<Callout>
+Every future benchmark post in this devlog uses this rig, unchanged. If I have to change
+it, that gets its own entry and every prior number gets an asterisk.
+</Callout>

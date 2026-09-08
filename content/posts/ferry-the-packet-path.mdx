@@ -1,0 +1,67 @@
+---
+title: The packet path I'm aiming for
+date: 2026-09-08
+kind: log
+project: ferry
+summary: Sketching the XDP program before writing a line of it, and the three places I fully expect to discover I was wrong.
+tags: [go, ebpf, xdp, networking]
+---
+
+The whole design rests on one claim: for the overwhelming majority of packets, ferry
+should never touch the kernel network stack. A SYN needs a decision. Everything after
+it is a table lookup and a rewrite.
+
+<Term title="attaching the program">
+$ sudo ferry attach --iface enp3s0 --mode xdp-native
+loaded prog ferry_ingress    (id 412, 1832 insns, verified 41ms)
+attached enp3s0              (driver: igc, mode: native)
+maps: backends[1024] conntrack[65536] stats[8]
+$ ferry stat --watch
+pps 1.41M   drops 0   fastpath 99.7%   p99 18µs
+</Term>
+
+## The decision, once
+
+Maglev gives us a fixed-size lookup table where each slot names a backend. Building it
+is the only expensive part, and it happens on the control plane, well off the hot path:
+
+```go
+// Populate fills the lookup table. Called on endpoint change, never per-packet.
+func (t *Table) Populate(backends []Backend) {
+	perm := permutations(backends, t.size)
+	next := make([]uint32, len(backends))
+	for filled := 0; filled < t.size; {
+		for i := range backends {
+			c := perm[i][next[i]]
+			for t.entry[c] != -1 {
+				next[i]++
+				c = perm[i][next[i]]
+			}
+			t.entry[c] = int32(i)
+			next[i]++
+			if filled++; filled == t.size {
+				return
+			}
+		}
+	}
+}
+```
+
+<Callout kind="gotcha" title="Where I expect to be wrong">
+Atomic map swap. I'm assuming I can replace the backend table without a window where
+in-flight connections hash somewhere new. If that turns out to need a full
+`BPF_MAP_TYPE_ARRAY_OF_MAPS` indirection, the next entry is going to be a correction.
+</Callout>
+
+The rest is bookkeeping: a conntrack map keyed by 5-tuple so established flows skip the
+hash entirely, and a stats map that Prometheus scrapes through a userspace shim.
+
+## The three things I'm least sure about
+
+1. **Map swap atomicity**, above.
+2. **Verifier patience.** The connection-tracking path has a loop I can probably bound,
+   but "probably" and the eBPF verifier have a difficult relationship.
+3. **Whether XDP is even the right layer** for the L7 side. It clearly isn't — that
+   half will land in userspace, and the interesting question is where the boundary goes.
+
+Writing these down now so that when I'm wrong, it's on the record.

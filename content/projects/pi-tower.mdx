@@ -1,0 +1,47 @@
+---
+title: pi-tower
+tagline: Six Raspberry Pi 5s running k3s in a printed 10-inch rack. NVMe boot, PoE, and a monitoring stack that watches itself.
+domain: infra
+status: active
+effort: XL
+started: 2025-03-01
+featured: true
+weight: 90
+stack: [k3s, Cilium, Flux, Prometheus, Raspberry Pi 5]
+tags: [k3s, cilium, flux, homelab]
+links:
+  - { label: "Cluster config · github", href: "https://github.com/bblaker/pi-tower" }
+spec:
+  - { k: Nodes, v: 6 × Pi 5 8GB }
+  - { k: Storage, v: 6 × 1TB NVMe }
+  - { k: Networking, v: PoE+, 2.5GbE }
+  - { k: Idle draw, v: "~48W" }
+  - { k: Distribution, v: k3s }
+  - { k: CNI, v: Cilium }
+  - { k: GitOps, v: Flux }
+---
+
+Six Raspberry Pi 5s in a rack I designed and printed, running k3s. It started as a
+way to stop breaking things at work and turned into the most useful piece of hardware
+I own — it runs my monitoring, backups, media, and whatever I'm currently building.
+
+## Why six
+
+Three would have been enough for a control plane and a couple of workloads. Six means
+I can drain two nodes at once and still have quorum, which is the difference between
+maintenance being a chore and maintenance being a thing I actually do. It also makes
+failure interesting rather than terminal: I can pull a node mid-afternoon and watch
+what happens.
+
+## What it taught me
+
+Mostly that the boring parts matter more than the clever ones. NVMe boot was worth
+more than any tuning I did. Cilium over flannel was worth it, but not for the reasons
+I expected. And the PoE budget is a real constraint that I got wrong the first time —
+that one is written up in the devlog.
+
+<Callout kind="note">
+This site is *not* served from here — it's static, and it lives on a CDN where it can't
+take the cluster down with it or vice versa. The cluster runs the things that actually
+need to be running.
+</Callout>

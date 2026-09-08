@@ -1,0 +1,24 @@
+---
+import { isoDate, readingTime } from '~/lib/format';
+import type { Post } from '~/lib/content';
+
+interface Props {
+  post: Post;
+  /** Devlog entry number, when this post belongs to a project. */
+  n?: number;
+  projectTitle?: string;
+}
+const { post, n, projectTitle } = Astro.props;
+const { title, date, kind } = post.data;
+const mins = readingTime(post.body);
+---
+<div class="row-post">
+  <time class="date" datetime={date.toISOString()}>{isoDate(date)}</time>
+  <span class="kind" data-kind={kind}>{kind}</span>
+  <span class="ttl">
+    <a href={`/log/${post.id}/`}>
+      {projectTitle && n && <small>{projectTitle} #{n}</small>}{title}
+    </a>
+  </span>
+  <span class="rt">{mins} min</span>
+</div>

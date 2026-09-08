@@ -1,0 +1,21 @@
+---
+import Base from '~/layouts/Base.astro';
+import ProjectsView from '~/components/ProjectsView.astro';
+import { allProjects, domainCounts } from '~/lib/content';
+
+const projects = await allProjects();
+const counts = await domainCounts(projects);
+---
+<Base
+  title="Projects"
+  description="Software, infrastructure and hardware projects — plus the backlog, because pretending the list is finished would be dishonest."
+  section="projects"
+>
+  <ProjectsView
+    heading="Projects"
+    blurb="Things I've built and still maintain — software first, because that's most of it. The backlog is public too; it's more honest than pretending the list is finished."
+    projects={projects}
+    total={projects.length}
+    counts={counts}
+  />
+</Base>

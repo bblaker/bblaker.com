@@ -1,0 +1,72 @@
+---
+import Base from '~/layouts/Base.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+import ProjectRow from '~/components/ProjectRow.astro';
+import PostRow from '~/components/PostRow.astro';
+import { allProjects, allPosts, devlogIndex } from '~/lib/content';
+
+const projects = await allProjects();
+const active = projects.filter((p) => p.data.status === 'active');
+const nextUp = projects.filter((p) => p.data.status === 'planned').slice(0, 3);
+const recent = (await allPosts()).slice(0, 6);
+const dl = await devlogIndex();
+
+// Domains of work, not a spec dump. The hardware numbers live on the project
+// pages, where they're load-bearing rather than decorative.
+const statusline = [
+  'SRE & Platform',
+  'Cloud Infrastructure',
+  'Software',
+  '3D Printing',
+  'Homelab',
+];
+---
+<Base
+  title="Ben Blaker — software, infrastructure, and the machines it runs on"
+  description="Systems engineer working in Go and TypeScript. Software projects, homelab infrastructure, and 3D printing."
+>
+  <section class="hero">
+    <h1 class="hero-name">Ben Blaker<span class="hl">.</span></h1>
+    <p class="hero-claim">
+      I build <span class="hl">software</span>, and the infrastructure and machines it runs on.
+    </p>
+    <p class="sub">
+      Systems engineer working in Go and TypeScript. Most of what's here is software — routers,
+      CLIs, developer tooling — plus the homelab it gets deployed to and the printers that make the parts.
+    </p>
+    <p class="statusline">
+      {statusline.map((s, i) => (
+        <Fragment>{i > 0 && <i aria-hidden="true">·</i>}<b>{s}</b></Fragment>
+      ))}
+    </p>
+  </section>
+
+  {active.length > 0 && (
+    <section class="section">
+      <SectionHead label="Currently building" count={active.length} moreHref="/projects/" moreLabel="All projects" />
+      <div class="card-grid">
+        {active.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </section>
+  )}
+
+  {nextUp.length > 0 && (
+    <section class="section">
+      <SectionHead label="Next up" count={nextUp.length} moreHref="/projects/#backlog" moreLabel="Full backlog" />
+      <div class="rows">
+        {nextUp.map((project) => <ProjectRow project={project} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <SectionHead label="Recent" count={recent.length} moreHref="/log/" moreLabel="Full log" />
+    <div class="rows">
+      {recent.map((post) => {
+        const meta = dl.get(post.id);
+        return <PostRow post={post} n={meta?.n} projectTitle={meta?.projectTitle} />;
+      })}
+    </div>
+  </section>
+</Base>

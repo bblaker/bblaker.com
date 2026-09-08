@@ -1,0 +1,33 @@
+---
+title: A small pattern for wrapping errors that survives errors.Is
+date: 2026-08-11
+kind: note
+summary: Sentinel errors and context are not in tension, but you have to wrap in the right direction to get both.
+tags: [go, errors]
+---
+
+Two things I want from an error: enough context to know where it came from, and enough
+structure that a caller can branch on it. It's easy to get one and lose the other.
+
+```go
+var ErrNoBackend = errors.New("no healthy backend")
+
+func (p *Pool) Pick(key uint64) (*Backend, error) {
+	b := p.table.Lookup(key)
+	if b == nil {
+		return nil, fmt.Errorf("pool %q: %w", p.name, ErrNoBackend)
+	}
+	return b, nil
+}
+```
+
+The `%w` is the whole trick. `errors.Is(err, ErrNoBackend)` still matches at any depth,
+and the message still tells you *which* pool.
+
+Where I see this go wrong is `%v` instead of `%w` — it reads identically in logs and
+silently breaks every caller doing `errors.Is`. That's a one-character bug with no
+symptom until someone's retry logic quietly stops retrying.
+
+If you're joining multiple failures, `errors.Join` preserves matching across all of
+them, which is what you want for something like health checks where several backends
+failed for different reasons.

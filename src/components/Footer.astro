@@ -1,0 +1,12 @@
+---
+import { site, socials } from '~/site';
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <!-- A uname-style identity strip. The site's one flourish, kept deadpan. -->
+  <span class="line">{year} · {site.name} · astro · statically generated · 0 kb of client javascript</span>
+  <ul class="links">
+    {socials.map((s) => <li><a href={s.href} rel={s.rel}>{s.label}</a></li>)}
+    <li><a href="/rss.xml">RSS</a></li>
+  </ul>
+</footer>

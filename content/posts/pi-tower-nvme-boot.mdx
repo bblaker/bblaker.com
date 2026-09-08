@@ -1,0 +1,46 @@
+---
+title: Moving all six nodes to NVMe boot
+date: 2026-08-19
+kind: log
+project: pi-tower
+summary: The single change that did more for cluster stability than every tuning knob I turned before it.
+tags: [k3s, raspberry-pi, storage, homelab]
+---
+
+For about a year the cluster booted from SD cards, and for about a year I had a slow
+background rate of weird failures: nodes that went read-only, etcd that got unhappy
+under write load, and one card that simply stopped existing mid-week.
+
+Every one of those was the storage. I spent an embarrassing amount of that year tuning
+things that were not the storage.
+
+## The change
+
+Six NVMe HATs, six 1TB drives, and a `rpi-eeprom-config` change to move NVMe ahead of
+SD in the boot order. The tedious part was doing it six times without letting the
+cluster drop below quorum.
+
+<Term title="one node at a time">
+$ kubectl drain pi-04 --ignore-daemonsets --delete-emptydir-data
+node/pi-04 drained
+$ ssh pi-04 sudo rpi-eeprom-config --edit   # BOOT_ORDER=0xf416
+$ ssh pi-04 sudo reboot
+$ kubectl uncordon pi-04
+node/pi-04 uncordoned
+</Term>
+
+## What actually changed
+
+etcd write latency dropped by roughly an order of magnitude and, more importantly,
+stopped having a long tail. The read-only remounts went away entirely. Nothing else
+about the cluster changed.
+
+<Callout kind="warn" title="Check your power budget first">
+Six NVMe drives is a real addition to the PoE budget, and I got this wrong: two nodes
+brown-out rebooted under simultaneous load before I worked out what was happening. Sum
+the peak draw, not the idle draw.
+</Callout>
+
+The lesson isn't "NVMe is faster", which everyone knows. It's that I spent a year
+tuning around a problem I'd have found in a day if I'd measured storage latency before
+touching anything else.

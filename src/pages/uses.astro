@@ -1,0 +1,72 @@
+---
+import Base from '~/layouts/Base.astro';
+import SpecTable from '~/components/SpecTable.astro';
+import SectionHead from '~/components/SectionHead.astro';
+
+/**
+ * Real numbers only. A /uses page full of aspirational kit is worse than no
+ * /uses page — correct these to what you actually own before launch.
+ */
+const cluster = [
+  { k: 'Nodes', v: '6 × Raspberry Pi 5 8GB' },
+  { k: 'Storage', v: '6 × 1TB NVMe' },
+  { k: 'Network', v: '2.5GbE managed, PoE+' },
+  { k: 'Distribution', v: 'k3s' },
+  { k: 'CNI', v: 'Cilium' },
+  { k: 'GitOps', v: 'Flux' },
+  { k: 'Idle draw', v: '~48W' },
+];
+
+const printers = [
+  { k: 'Machines', v: '3, all Klipper' },
+  { k: 'Largest volume', v: '350 × 350 × 350' },
+  { k: 'Materials', v: 'PLA, PETG, ASA, TPU' },
+  { k: 'Slicer', v: 'OrcaSlicer' },
+  { k: 'Monitoring', v: 'Moonraker → Prometheus' },
+];
+
+const desk = [
+  { k: 'Editor', v: 'Neovim' },
+  { k: 'Shell', v: 'zsh + tmux' },
+  { k: 'Terminal', v: 'Ghostty' },
+  { k: 'Font', v: 'IBM Plex Mono' },
+  { k: 'Languages', v: 'Go, TypeScript' },
+];
+
+const thisSite = [
+  { k: 'Framework', v: 'Astro 5' },
+  { k: 'Content', v: 'MDX + Zod schemas' },
+  { k: 'Styling', v: 'Plain CSS, no framework' },
+  { k: 'Client JS', v: '0 kb' },
+  { k: 'Hosting', v: 'Cloudflare Pages' },
+];
+---
+<Base title="Uses" description="The hardware I run, the printers I maintain, and the tools I work in." section="uses">
+  <article class="post-wrap">
+    <h1>Uses</h1>
+    <p class="post-lede">
+      What I actually run, rather than what I'd recommend. Most of it has been in service
+      long enough to have opinions attached.
+    </p>
+
+    <section class="section">
+      <SectionHead label="Cluster" moreHref="/projects/pi-tower/" moreLabel="pi-tower" />
+      <SpecTable rows={cluster} />
+    </section>
+
+    <section class="section">
+      <SectionHead label="Printers" moreHref="/projects/printers/" moreLabel="printers" />
+      <SpecTable rows={printers} />
+    </section>
+
+    <section class="section">
+      <SectionHead label="Desk" />
+      <SpecTable rows={desk} />
+    </section>
+
+    <section class="section">
+      <SectionHead label="This site" />
+      <SpecTable rows={thisSite} />
+    </section>
+  </article>
+</Base>

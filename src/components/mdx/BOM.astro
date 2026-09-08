@@ -1,0 +1,36 @@
+---
+/** Bill of materials. The reason hardware posts are worth writing long. */
+interface Row {
+  qty: number;
+  part: string;
+  source?: string;
+  href?: string;
+  cost?: number;
+}
+interface Props { items: Row[]; currency?: string }
+const { items, currency = '$' } = Astro.props;
+const total = items.reduce((sum, i) => sum + (i.cost ?? 0) * i.qty, 0);
+const money = (n: number) => `${currency}${n.toFixed(2)}`;
+---
+<div style="overflow-x:auto">
+  <table class="bom">
+    <thead>
+      <tr><th>Qty</th><th>Part</th><th>Source</th><th style="text-align:right">Cost</th></tr>
+    </thead>
+    <tbody>
+      {items.map((i) => (
+        <tr>
+          <td class="qty">{i.qty}×</td>
+          <td>{i.part}</td>
+          <td>{i.href ? <a href={i.href}>{i.source ?? 'link'}</a> : (i.source ?? '—')}</td>
+          <td class="cost">{i.cost !== undefined ? money(i.cost * i.qty) : '—'}</td>
+        </tr>
+      ))}
+    </tbody>
+    {total > 0 && (
+      <tfoot>
+        <tr><td class="qty"></td><td>Total</td><td></td><td class="cost">{money(total)}</td></tr>
+      </tfoot>
+    )}
+  </table>
+</div>

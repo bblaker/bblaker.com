@@ -1,0 +1,49 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '~/layouts/Base.astro';
+import ProjectsView from '~/components/ProjectsView.astro';
+import { allProjects, domainCounts, type Project } from '~/lib/content';
+import { DOMAINS, type Domain } from '~/content.config';
+
+interface Props {
+  domain: Domain;
+  projects: Project[];
+  total: number;
+  counts: { domain: Domain; count: number }[];
+}
+
+/** Real routes, not query strings — filtering works with zero client JS. */
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects = await allProjects();
+  const counts = await domainCounts(projects);
+  return DOMAINS.map((domain) => ({
+    params: { domain },
+    props: {
+      domain,
+      projects: projects.filter((p) => p.data.domain === domain),
+      total: projects.length,
+      counts,
+    },
+  }));
+};
+
+const { domain, projects, total, counts } = Astro.props;
+
+const blurbs: Record<Domain, string> = {
+  software: 'Routers, CLIs, operators and developer tooling. Mostly Go, some TypeScript.',
+  infra: 'The homelab: a six-node k3s cluster, the network around it, and the practices that keep it up.',
+  hardware: 'Printers, printed parts, and instrumented machines. The physical half of the workshop.',
+};
+
+const heading = domain[0].toUpperCase() + domain.slice(1);
+---
+<Base title={`${heading} projects`} description={blurbs[domain]} section="projects">
+  <ProjectsView
+    heading={heading}
+    blurb={blurbs[domain]}
+    projects={projects}
+    total={total}
+    counts={counts}
+    active={domain}
+  />
+</Base>

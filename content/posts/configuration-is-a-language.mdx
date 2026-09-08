@@ -1,0 +1,47 @@
+---
+title: Configuration is a programming language whether you like it or not
+date: 2026-09-02
+kind: essay
+summary: Every config format grows conditionals, loops and functions eventually. The only question is whether it grows them on purpose.
+tags: [yaml, tooling, opinion]
+---
+
+Start with a list of key-value pairs. Perfectly reasonable. Then one value needs to
+differ between staging and production, so you add a conditional — maybe as an overlay
+file, maybe as a templating tag, maybe as a naming convention that a script interprets.
+Then you have twelve services that are almost identical, so you add a loop. Then the
+loop body needs a name derived from the index, so you add string interpolation.
+
+You have now written a programming language. You did it accidentally, without a spec,
+without a type system, and without a debugger.
+
+## The tell
+
+The tell is always the same: someone asks "why is this value wrong in production?" and
+the answer requires reading four files and simulating a text substitution in your head.
+
+That's not a configuration problem. That's a program you cannot step through.
+
+## What I actually think
+
+Not "YAML bad." YAML is fine as a serialization format, which is what it is. The mistake
+is asking a serialization format to carry logic, and then bolting the logic on through
+the one mechanism the format didn't reserve for it — string templating.
+
+Two honest options:
+
+- **Keep configuration dumb.** No conditionals, no loops, no interpolation. Generate it
+  from something else, and check the generated artifact into the repo where a human can
+  read it and a reviewer can diff it.
+- **Admit it's code.** Use a real language with types, a compiler and an editor that
+  understands it. CUE, Starlark, Pkl, or plain TypeScript.
+
+What doesn't work is the middle: a format that's neither dumb enough to read nor
+expressive enough to reason about.
+
+## The part people push back on
+
+"But then I need a build step." Yes. You already have one — it's Helm, or Kustomize, or
+a bash script, and the reason it doesn't feel like a build step is that it has no
+compiler, no type checker, and no errors until deploy time. Making it explicit isn't
+adding a step. It's noticing one.

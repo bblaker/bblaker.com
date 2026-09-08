@@ -1,0 +1,33 @@
+---
+title: printers
+tagline: The fleet, and the ongoing work of keeping three machines calibrated, modified, and actually printing.
+domain: hardware
+status: maintained
+effort: XL
+started: 2022-06-01
+weight: 50
+stack: [Klipper, Moonraker, PETG, ASA]
+tags: [3d-printing, klipper, maintenance]
+spec:
+  - { k: Machines, v: "3" }
+  - { k: Firmware, v: Klipper }
+  - { k: Largest volume, v: 350 × 350 × 350 }
+  - { k: Materials, v: PLA, PETG, ASA, TPU }
+  - { k: Uptime target, v: Best effort }
+---
+
+Three machines, all running Klipper, all modified past the point where the original
+manual is useful. This page is the fleet's home: every repair, mod, tuning session and
+failure gets a devlog entry here rather than disappearing into a notes file.
+
+## The standing setup
+
+Everything is on Klipper with Moonraker exposed to the network, which means printers
+are just another thing on the cluster's monitoring — chamber temperatures and print
+state land in the same Prometheus as the servers do. That turned out to be the single
+best quality-of-life change I've made.
+
+## What I actually spend time on
+
+Not printing. First layers, belt tension, and the slow drift of a machine that's been
+running for a year. The mods that stuck are the boring ones.

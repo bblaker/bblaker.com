@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bblaker.com/sitemap-index.xml

@@ -1,0 +1,14 @@
+---
+import type { Project } from '~/lib/content';
+
+interface Props { project: Project }
+const { project } = Astro.props;
+const { title, tagline, domain, status, effort } = project.data;
+---
+<div class="row-p">
+  <i class="d" data-domain={domain} aria-hidden="true"></i>
+  <span class="sl">{title}</span>
+  <span class="tg">{tagline}</span>
+  <span class="st">{status}</span>
+  <span class="ef" title={`Effort: ${effort}`}>{effort}</span>
+</div>

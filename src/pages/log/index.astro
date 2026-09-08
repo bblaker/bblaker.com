@@ -1,0 +1,43 @@
+---
+import Base from '~/layouts/Base.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import PostRow from '~/components/PostRow.astro';
+import { allPosts, devlogIndex } from '~/lib/content';
+
+const posts = await allPosts();
+const dl = await devlogIndex();
+
+/** Group by year — the only structural device the stream actually needs. */
+const byYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const y = post.data.date.getUTCFullYear();
+  const list = byYear.get(y);
+  if (list) list.push(post);
+  else byYear.set(y, [post]);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+---
+<Base
+  title="Log"
+  description="Build logs, essays and short notes on software, infrastructure and 3D printing."
+  section="log"
+>
+  <header style="padding:34px 0 20px">
+    <h1 style="font-family:var(--cond);font-weight:700;font-size:clamp(30px,5vw,40px);letter-spacing:-.012em">Log</h1>
+    <p style="color:var(--muted);max-width:58ch;margin-top:8px">
+      Build entries attached to a project, long-form essays, and short notes. Everything dated, newest first.
+    </p>
+  </header>
+
+  {years.map(([year, list]) => (
+    <section class="section">
+      <SectionHead label={String(year)} count={list.length} />
+      <div class="rows">
+        {list.map((post) => {
+          const meta = dl.get(post.id);
+          return <PostRow post={post} n={meta?.n} projectTitle={meta?.projectTitle} />;
+        })}
+      </div>
+    </section>
+  ))}
+</Base>
