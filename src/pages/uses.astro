@@ -4,8 +4,8 @@ import SpecTable from '~/components/SpecTable.astro';
 import SectionHead from '~/components/SectionHead.astro';
 
 /**
- * Real numbers only. A /uses page full of aspirational kit is worse than no
- * /uses page — correct these to what you actually own before launch.
+ * Every figure here should be something you have actually measured or can
+ * point at. A /uses page full of aspirational kit is worse than no /uses page.
  */
 const cluster = [
   { k: 'Nodes', v: '6 × Raspberry Pi 5 8GB' },
@@ -37,36 +37,75 @@ const thisSite = [
   { k: 'Framework', v: 'Astro 5' },
   { k: 'Content', v: 'MDX + Zod schemas' },
   { k: 'Styling', v: 'Plain CSS, no framework' },
-  { k: 'Client JS', v: '0 kb' },
-  { k: 'Hosting', v: 'Cloudflare Pages' },
+  { k: 'Client JS', v: 'None' },
+  { k: 'Hosting', v: 'Cloudflare, static' },
+  { k: 'Build', v: 'Push to main' },
 ];
 ---
-<Base title="Uses" description="The hardware I run, the printers I maintain, and the tools I work in." section="uses">
+<Base
+  title="Uses"
+  description="The hardware I run, the printers I maintain, and the tools I work in — with what I'd change."
+  section="uses"
+>
   <article class="post-wrap">
     <h1>Uses</h1>
     <p class="post-lede">
-      What I actually run, rather than what I'd recommend. Most of it has been in service
-      long enough to have opinions attached.
+      What I actually run, rather than what I'd recommend. Most of it has been in service long
+      enough to have opinions attached, so those are here too.
     </p>
 
     <section class="section">
       <SectionHead label="Cluster" moreHref="/projects/pi-tower/" moreLabel="pi-tower" />
       <SpecTable rows={cluster} />
+      <p class="verdict">
+        Six nodes rather than three, so I can drain two for maintenance and still have quorum.
+        That sounds like over-provisioning until the first time you'd otherwise have postponed
+        an upgrade for a fortnight.
+      </p>
+      <p class="verdict">
+        <strong>What I'd change:</strong> nothing about the topology, everything about the
+        order I did it in. NVMe boot was worth more than every tuning change I made before it,
+        and I made a lot of them first.
+      </p>
     </section>
 
     <section class="section">
       <SectionHead label="Printers" moreHref="/projects/printers/" moreLabel="printers" />
       <SpecTable rows={printers} />
+      <p class="verdict">
+        All three run Klipper, which is less about speed than about the machine being
+        introspectable — config in a text file, macros I can read, and metrics I can scrape.
+        A printer I can't query is a printer I can't debug.
+      </p>
+      <p class="verdict">
+        <strong>What I'd change:</strong> I'd have consolidated on one toolhead ecosystem
+        earlier. Three machines with three different hotends means three sets of spares and
+        three sets of habits.
+      </p>
     </section>
 
     <section class="section">
       <SectionHead label="Desk" />
       <SpecTable rows={desk} />
+      <p class="verdict">
+        Boring on purpose. Everything here is something I can reproduce on a fresh machine
+        from a dotfiles repo in about ten minutes, which matters more to me than any individual
+        tool being optimal.
+      </p>
     </section>
 
     <section class="section">
       <SectionHead label="This site" />
       <SpecTable rows={thisSite} />
+      <p class="verdict">
+        Static, no client JavaScript, no framework CSS. Content is MDX validated against Zod
+        schemas at build time, so a malformed post fails CI rather than shipping broken.
+      </p>
+      <p class="verdict">
+        <strong>Deliberately not self-hosted.</strong> It would be neater to serve this from
+        the cluster it talks about, but then an evening of tinkering takes the portfolio down
+        with it. The cluster runs the things that need to be running.
+      </p>
     </section>
   </article>
 </Base>

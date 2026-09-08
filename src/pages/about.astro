@@ -9,32 +9,53 @@ import { site, socials } from '~/site';
       <p>
         I'm Ben Blaker, a systems engineer. Most of my work is software — Go and TypeScript,
         usually infrastructure-shaped: routers, operators, CLIs, and the tooling that makes
-        other engineers faster. The rest is the environment that software runs in: a six-node
-        k3s cluster in my office, the network around it, and the printers that make the parts
+        other engineers faster. The rest is the environment that software runs in: a k3s
+        cluster in my office, the network around it, and the printers that make the parts
         holding it together.
       </p>
       <p>
+        I've spent most of the last decade in SRE and platform engineering roles, mostly at
+        companies where the infrastructure got large enough to start hurting. That work
+        teaches you a particular kind of humility — that the interesting failures are almost
+        never the ones you designed for, and that the graph you didn't think to draw is the
+        one you'll want at 3am.
+      </p>
+
+      <h2>How I work</h2>
+      <p>
         The through-line is that I like understanding things all the way down. It's the same
-        instinct whether it's reading kernel networking code, tearing a printer down to find
-        why the first layer drifts, or working out which of six nodes is lying about its state.
-        Most of what I publish here is that process, written down while it's still uncertain.
+        instinct whether it's reading kernel networking code, tearing a printer apart to find
+        why the first layer drifts, or working out which of six nodes is lying about its
+        state. I'm suspicious of abstractions I can't see through, which is less a principle
+        than a compulsion.
+      </p>
+      <p>
+        In practice that means I'd rather run something myself once than read three blog posts
+        about it. The homelab exists because a cluster you can break at 11pm teaches you
+        things a managed one never will. The printers exist for the same reason, and have the
+        additional virtue of failing in ways you can hold.
       </p>
 
       <h2>What's here</h2>
       <p>
-        <a href="/projects/">Projects</a> are long-lived things with a status and a spec sheet.
-        The <a href="/log/">log</a> is dated entries — build notes attached to a project, longer
-        essays, and short notes. The backlog is public, which I find more honest than pretending
-        the list is finished.
+        <a href="/projects/">Projects</a> are long-lived things with a status and a spec
+        sheet. The <a href="/log/">log</a> is dated entries — build notes attached to a
+        project, longer essays, and short notes. The <a href="/projects/#backlog">backlog</a>
+        is public, which I find more honest than pretending the list is finished.
       </p>
       <p>
         I try to write things down before I know how they turn out. A build log written on day
-        one is more useful than a polished retrospective written three weeks later, because the
-        uncertainty is the interesting part and it doesn't survive being remembered.
+        one is more useful than a polished retrospective written three weeks later, because
+        the uncertainty is the interesting part and it doesn't survive being remembered. Some
+        of these entries will age badly. That's the point of dating them.
       </p>
 
       <h2>Elsewhere</h2>
-      <p>{socials.map((s, i) => (<Fragment>{i > 0 && ' · '}<a href={s.href} rel={s.rel}>{s.label}</a></Fragment>))}</p>
+      <p>
+        {socials.map((s, i) => (
+          <Fragment>{i > 0 && ' · '}<a href={s.href} rel={s.rel}>{s.label}</a></Fragment>
+        ))}
+      </p>
     </div>
   </article>
 </Base>

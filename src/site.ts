@@ -12,7 +12,12 @@ export const site = {
     'Systems engineer working in Go and TypeScript. Software projects, homelab infrastructure, and 3D printing.',
 
   github: 'https://github.com/bblaker',
-  email: 'bblaker@gmail.com',
+
+  // A forwarding alias, not the primary address. Set up via Cloudflare Email
+  // Routing so it can be deleted and replaced if it ever gets harvested —
+  // which is the only spam defence that actually works. Obfuscating a real
+  // address just makes it slightly slower to scrape.
+  email: 'hello@bblaker.com',
 } as const;
 
 export interface Social {

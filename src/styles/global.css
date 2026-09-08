@@ -324,6 +324,11 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .bom td.qty, .bom td.cost { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 .bom tfoot td { color: var(--text); font-family: var(--mono); border-bottom: 0; border-top: 1px solid var(--line-hi); }
 
+/* A short verdict under a spec block. Muted, so the table still leads. */
+.verdict { color: var(--muted); font-size: 15px; line-height: 1.62; max-width: 62ch; margin-top: 15px; }
+.verdict + .verdict { margin-top: 10px; }
+.verdict strong { color: var(--text); font-weight: 500; }
+
 /* --------------------------------------------------------------- filters -- */
 .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-bottom: 22px; }
 .filters a {
