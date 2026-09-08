@@ -3,7 +3,7 @@ title: The VLANs I have, and why they stopped meaning anything
 date: 2026-08-17
 kind: log
 project: meshwork
-draft: true
+draft: false
 summary: Three or four VLANs, each added for a good reason, none of them describing anything real any more, and a primary subnet running out of addresses to force the issue.
 tags: [networking, vlans, unifi, homelab]
 ---
@@ -72,14 +72,13 @@ definition, "does this belong here?" has no answer, and the default answer becom
 ## The part that actually worries me
 
 The plan is the easy half. This is a live network that a household depends on: Home
-Assistant, printers, the cluster, everyone's phones and
-laptops. Re-addressing it means moving all of that without a maintenance window and
-without a sympathetic audience.
+Assistant, printers, the lab, everyone's phones, consoles and laptops. Re-addressing it 
+means moving all of that without a maintenance window and without a sympathetic audience.
 
-Some of it will move cleanly. The Z-Wave devices don't care about IP at all. Some of it
-will not: anything with a hardcoded address, anything that discovered a peer once and
-cached it, and every automation that quietly depends on something being reachable that
-briefly won't be.
+Some of it will move cleanly. Some of it will not: anything with a hardcoded address, 
+anything that discovered a peer once and cached it, and every automation that quietly 
+depends on something being reachable that briefly won't be.
 
 That's the entry I'm actually looking forward to writing, and it's the one that won't be
-a tidy diagram.
+a tidy diagram. The project is in my backlog. How soon I get to it depends on how fast I 
+run out of address space.
