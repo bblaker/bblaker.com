@@ -159,16 +159,20 @@ what cdk8s gets right and what I wanted instead.
 the frame — undecided, and the indecision is the content.
 
 - **domain** hardware · **status** active · **effort** L
-- **spec** Volume `350 × 350` · Kinematics `CoreXY` · State `torn down`
+- **spec** Volume `350 × 350` · Kinematics `CoreXY` · State `torn down` · Constraint `bench space`
 
 Real, and better than the hypothetical build it replaced. A machine that lost its job to
 a newer one, stripped deliberately rather than abandoned, is a more honest subject than
 a triumphant build log — and the rebuild-or-repurpose decision is one most people face
 and few write about.
 
+The real driver is space, not engineering — a 350 Voron has a substantial footprint and
+bench is the scarce resource right now. Saying that plainly is what makes the page work;
+most teardown posts invent a technical justification after the fact.
+
 **Devlog seeds:** why it came apart · what wore out in a few years of running · the parts
-inventory · rebuild as a 2.4, or repurpose the frame · whether a second large printer
-earns its bench space · what I'd do differently on the gantry.
+inventory · rebuild, repurpose, or part out · what a machine has to earn to keep its
+footprint · what I'd do differently on the gantry.
 
 ---
 
