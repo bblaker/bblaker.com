@@ -12,7 +12,7 @@ const server = [
   { k: 'Storage', v: '30 TB' },
   { k: 'Containers', v: 'Several dozen' },
   { k: 'Virtual machines', v: 'Half a dozen' },
-  { k: 'Hypervisor nodes', v: '2 × Mac Mini, Proxmox' },
+  { k: 'Hypervisor nodes', v: '2 × Mac Mini, Proxmox → OpenClaw' },
 ];
 
 const network = [
@@ -40,6 +40,8 @@ const printers = [
   { k: 'Speccing', v: 'CocoaPress' },
   { k: 'Previously', v: 'Prusa Mini, smaller Voron' },
   { k: 'Slicer', v: 'PrusaSlicer / OrcaSlicer' },
+  { k: 'Materials', v: 'PLA, PETG, ABS' },
+  { k: 'Next', v: 'Flexibles' },
 ];
 
 const automation = [
@@ -98,8 +100,8 @@ const thisSite = [
         experiment carried a small tax of guilt.
       </p>
       <p class="verdict">
-        The two Mac Minis are older machines running Proxmox, currently being repurposed.
-        Second-hand Apple hardware makes a surprisingly good hypervisor node: quiet, low
+        The two Mac Minis are older machines running Proxmox, currently being repurposed as
+        OpenClaw boxes. Second-hand Apple hardware makes a surprisingly good node: quiet, low
         power, and available cheaply precisely because nobody wants a Mac they can't update.
       </p>
     </section>
@@ -194,6 +196,12 @@ const thisSite = [
         something you just do. The <a href="/projects/voron-24/">Voron 2.4</a> is in pieces while
         I decide whether it comes back as itself, and a CocoaPress is currently being specced,
         because apparently I now need a printer that extrudes chocolate.
+      </p>
+      <p class="verdict">
+        Mostly PETG and PLA, with ABS regularly enough that the enclosure earns its keep. The
+        next thing I want to attempt is an airless basketball in a flexible filament — a
+        lattice that has to survive being bounced is a genuinely hard print, and failure will
+        be obvious and immediate, which is my favourite kind of test.
       </p>
       <p class="verdict">
         <strong>I build printers from scratch on purpose.</strong> A machine you assembled is
