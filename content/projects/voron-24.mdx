@@ -1,14 +1,50 @@
 ---
 title: voron 2.4
-tagline: Self-sourced 350mm CoreXY build — full BOM, wiring, and every mistake, in order.
+tagline: A 350mm Voron 2.4, currently torn down — and an open question about whether it gets rebuilt as itself or becomes something else.
 domain: hardware
-status: planned
+status: active
 effort: L
-weight: 32
-stack: [Klipper, Octopus Pro, CoreXY]
-tags: [3d-printing, klipper, corexy]
+started: 2023-01-01
+weight: 40
+stack: [Voron, CoreXY, Klipper]
+tags: [3d-printing, voron, corexy, klipper]
+spec:
+  - { k: Volume, v: 350 × 350 }
+  - { k: Kinematics, v: CoreXY }
+  - { k: State, v: Torn down }
+  - { k: Future, v: Undecided }
 ---
 
-Only if I actually want another machine. Self-sourced builds make excellent long-form
-content and the BOM component was designed for exactly this — but manufacturing a build
-to fill a page would show.
+The 350 is in pieces on the bench. That wasn't a failure — it's a machine I know well
+enough to strip without anxiety, which is exactly the position building one yourself
+puts you in.
+
+## Why it came apart
+
+The Core One with INDX took over as the workhorse, and once a machine stops being the
+one you reach for, its problems stop getting fixed. Rather than let it slowly become a
+large object that mostly gathers dust, it seemed better to take it apart while I still
+remember how it goes together.
+
+## Rebuild, or repurpose
+
+Genuinely undecided, and that's the interesting part of this project.
+
+**Rebuild as a 2.4.** Bring it back current — updated toolhead, better wiring, and the
+handful of things I'd do differently having lived with the first version. The argument
+for this is that a large-format CoreXY is a genuinely different tool from the Core One,
+not a redundant one, and 350mm of build volume solves problems nothing else here can.
+
+**Repurpose the frame.** It's a well-built gantry and a lot of good linear motion
+hardware. Large-format machines don't have to be printers — the same mechanics serve a
+number of other things, and starting from a frame I already trust removes most of the
+risk from a more speculative build.
+
+<Callout kind="gotcha" title="The honest constraint">
+The deciding factor probably isn't technical. It's whether a second large printer earns
+its bench space, and I'm not yet sure it does. Writing that down now so I can check
+later whether I talked myself into the answer I wanted.
+</Callout>
+
+The teardown gets documented either way. Whichever direction this goes, the parts
+inventory and the notes on what wore out over a few years of running are worth having.

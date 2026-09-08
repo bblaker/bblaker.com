@@ -25,7 +25,7 @@ Effort is evenings-and-weekends: **S** ≈ a weekend · **M** ≈ a few weeks ·
 | [drift](#drift) | software | CARRIED | M | Terraform drift detection that pages only on surprises |
 | [pulse](#pulse) | software | CARRIED | M | Prometheus TUI — PromQL in, sparklines out |
 | [helmwright](#helmwright) | software | CARRIED | M | Typed Helm chart scaffolding in TypeScript |
-| [voron-24](#voron-24) | hardware | CARRIED | L | Self-sourced 350mm CoreXY build |
+| [voron-24](#voron-24) | hardware | REAL | L | A 350mm Voron 2.4, torn down, future undecided |
 | [respawn](#respawn) | software | CANDIDATE | L | Kubernetes operator for game servers |
 | [spool](#spool) | software | CANDIDATE | M | Filament inventory that decrements itself |
 | [slab](#slab) | software | CANDIDATE | M | SLOs as code → Prometheus burn-rate alerts |
@@ -155,18 +155,20 @@ what cdk8s gets right and what I wanted instead.
 
 ## voron-24
 
-**Self-sourced 350mm CoreXY build.** Full BOM, wiring, every mistake.
+**An existing 350mm Voron 2.4, currently torn down.** Rebuild as a 2.4, or repurpose
+the frame — undecided, and the indecision is the content.
 
-- **domain** hardware · **status** — · **effort** L
-- **spec** Volume `350³` · Kinematics `CoreXY` · Extruder `Clockwork 2` ·
-  Hotend `Dragon UHF` · MCU `Octopus Pro` · Firmware `Klipper`
+- **domain** hardware · **status** active · **effort** L
+- **spec** Volume `350 × 350` · Kinematics `CoreXY` · State `torn down`
 
-Only if you actually want to build one. The `<BOM>` component was designed for
-this, and self-sourced builds make excellent long-form content — but don't
-manufacture a build to fill a page.
+Real, and better than the hypothetical build it replaced. A machine that lost its job to
+a newer one, stripped deliberately rather than abandoned, is a more honest subject than
+a triumphant build log — and the rebuild-or-repurpose decision is one most people face
+and few write about.
 
-**Devlog seeds:** the BOM, and where I deviated · gantry squaring, twice ·
-first layer, day one vs day thirty · what I'd source differently.
+**Devlog seeds:** why it came apart · what wore out in a few years of running · the parts
+inventory · rebuild as a 2.4, or repurpose the frame · whether a second large printer
+earns its bench space · what I'd do differently on the gantry.
 
 ---
 
