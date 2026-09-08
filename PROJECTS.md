@@ -39,10 +39,11 @@ Effort is evenings-and-weekends: **S** ≈ a weekend · **M** ≈ a few weeks ·
 | [lookout](#lookout) | infra | CANDIDATE | M | The observability stack, and what it actually caught |
 | [holdfast](#holdfast) | infra | CANDIDATE | M | Backups you have actually restored from |
 | [chamber](#chamber) | hardware | CANDIDATE | M | Instrumented printer enclosure on ESP32 |
+| [festoon](#festoon) | hardware | REAL | M | A holiday lighting controller that stays powered on |
 | [rack](#rack) | hardware | CANDIDATE | M | The printed 10" rack, designed properly |
 | [sortbrick](#sortbrick) | hardware | CANDIDATE | XL | Lego sorting machine — CV plus a printed feeder |
 
-Current mix: **12 software · 5 infra · 5 hardware**. That ratio is deliberate —
+Current mix: **12 software · 5 infra · 6 hardware**. That ratio is deliberate —
 it puts software first on `/projects` without pretending the rest isn't there.
 
 ---
@@ -379,6 +380,25 @@ hardware content *technical* rather than merely a build log.
 
 **Devlog seeds:** printers on the same dashboard as the servers · does chamber
 temperature actually matter · a filament dryer with a control loop.
+
+## festoon
+
+**A holiday lighting controller that stays powered on.** Diagnose why the current one
+doesn't, then build a replacement informed by the answer.
+
+- **domain** hardware · **status** planned · **effort** M
+- **stack** ESP32, WLED, QuinLED, Home Assistant
+
+Real problem, already happening: the permanent run's QuinLED ESP32 drops power
+unpredictably, and the show has to run unattended in the cold every night in December.
+Strong content because it's a genuine diagnosis with several plausible causes — brownout
+under peak load, insufficient power injection, Wi-Fi power management, cold and
+condensation, or a degrading supply — and the honest approach is instrumentation before
+parts.
+
+**Devlog seeds:** the controller that won't stay up · logging voltage at both ends of the
+run · what full white actually draws · reset reasons, correlated against the show ·
+designing the replacement from the graph · an enclosure for a wet December.
 
 ## rack
 

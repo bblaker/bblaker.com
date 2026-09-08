@@ -1,0 +1,52 @@
+---
+title: festoon
+tagline: A holiday lighting controller that stays powered on — diagnosing why the current one doesn't, then building something that does.
+domain: hardware
+status: planned
+effort: M
+weight: 36
+stack: [ESP32, WLED, QuinLED, Home Assistant]
+tags: [electronics, esp32, wled, holiday-lighting]
+---
+
+The permanent lights run WLED on a QuinLED ESP32 board, and it will not stay reliably
+powered. It drops, it comes back, sometimes it needs a physical power cycle. For a show
+that has to run unattended in the cold every night in December, that is the whole problem.
+
+## Diagnose before rebuilding
+
+The instinct is to build a replacement, and that's probably where this ends up. But
+building something new is only a fix if I know what failed, and right now I don't. Swap
+the board, have it still drop out in February, and I've learned nothing while spending a
+weekend.
+
+The candidates, roughly in order of how likely I think they are:
+
+- **Brownout under load.** The ESP32 resets when the rail sags. Long pixel runs draw far
+  more current at full white than the arithmetic suggests, and a supply sized for average
+  draw dies on peaks.
+- **Insufficient power injection.** Voltage drop along the run means the far end is dim
+  and the near end is fine — but the resulting current draw profile can also drag the
+  controller's own supply down with it.
+- **Wi-Fi power management.** The ESP32 sleeping its radio and failing to come back
+  cleanly looks identical to a power fault from the outside.
+- **Cold and condensation.** It's outdoors. Enclosure temperature swings and moisture
+  ingress are real, and they're seasonal in a way that would explain a lot.
+- **The supply itself.** Cheap PSUs degrade, and they degrade first under exactly the
+  conditions this thing runs in.
+
+## What'll actually tell me
+
+Instrumentation before parts. Voltage logged at the controller and at the far end of the
+run, uptime and reset reason reported to Home Assistant, and enclosure temperature
+alongside both. WLED already exposes enough to correlate a reset against what the show
+was doing at the time.
+
+Once there's a graph, the rebuild designs itself: correctly sized supply, injection at
+the right intervals, a proper enclosure, and a board chosen for the load rather than for
+what was in the drawer.
+
+<Callout kind="note">
+Filed as hardware, but the interesting half is likely to be the telemetry. A light show
+that reports why it fell over is worth more than one that merely fails less often.
+</Callout>
