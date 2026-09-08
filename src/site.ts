@@ -11,7 +11,6 @@ export const site = {
   description:
     'Systems engineer working in Go and TypeScript. Software projects, homelab infrastructure, and 3D printing.',
 
-  // TODO(ben): confirm the handle — assumed from the wordmark, never verified.
   github: 'https://github.com/bblaker',
   email: 'bblaker@gmail.com',
 } as const;
