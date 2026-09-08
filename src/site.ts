@@ -13,9 +13,7 @@ export const site = {
 
   github: 'https://github.com/bblaker',
 
-  // TODO(ben): verify — the handle is a guess, unlike the GitHub one which
-  // was confirmed via SSH auth. Fix before anyone clicks it.
-  linkedin: 'https://www.linkedin.com/in/bblaker/',
+  linkedin: 'https://www.linkedin.com/in/bblaker',
 
   // A forwarding alias, not the primary address. Set up via Cloudflare Email
   // Routing so it can be deleted and replaced if it ever gets harvested —
