@@ -13,6 +13,10 @@ export const site = {
 
   github: 'https://github.com/bblaker',
 
+  // TODO(ben): verify — the handle is a guess, unlike the GitHub one which
+  // was confirmed via SSH auth. Fix before anyone clicks it.
+  linkedin: 'https://www.linkedin.com/in/bblaker/',
+
   // A forwarding alias, not the primary address. Set up via Cloudflare Email
   // Routing so it can be deleted and replaced if it ever gets harvested —
   // which is the only spam defence that actually works. Obfuscating a real
@@ -27,6 +31,7 @@ export interface Social {
 }
 
 export const socials: Social[] = [
+  { label: 'LinkedIn', href: site.linkedin, rel: 'me' },
   { label: 'GitHub', href: site.github, rel: 'me' },
   { label: 'Email', href: `mailto:${site.email}` },
 ];
