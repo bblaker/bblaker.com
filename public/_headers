@@ -1,13 +1,20 @@
-# Cloudflare Pages response headers. Rules merge in order, so the specific
-# asset rule below intentionally overrides the Cache-Control set in /*.
+# Workers Static Assets APPENDS matching rules rather than overriding them, so
+# a Cache-Control set here on /* would concatenate with the one below and
+# produce two contradictory max-age directives on every hashed asset.
+# Cache-Control is therefore set only on the paths that need a non-default
+# value; HTML keeps the platform default of must-revalidate.
 
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Cache-Control: public, max-age=0, must-revalidate
 
-# Astro fingerprints these filenames, so they can be cached forever.
+# Astro fingerprints these filenames, so they can never go stale.
 /_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# OG cards are regenerated under a new build hash whenever content changes,
+# and social scrapers refetch aggressively — worth caching hard.
+/og/*
   Cache-Control: public, max-age=31536000, immutable
