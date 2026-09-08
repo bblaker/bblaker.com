@@ -35,7 +35,7 @@ Effort is evenings-and-weekends: **S** ≈ a weekend · **M** ≈ a few weeks ·
 | [replay](#replay) | software | CANDIDATE | M | Record-and-replay HTTP proxy for testing |
 | [ledger](#ledger) | software | CANDIDATE | S | Homelab power and cost accounting |
 | [bootstrap](#bootstrap) | infra | CANDIDATE | L | Bare metal to running cluster in one command |
-| [meshwork](#meshwork) | infra | CANDIDATE | M | Segmented home network — VLANs, DNS, WireGuard |
+| [meshwork](#meshwork) | infra | REAL | M | Re-plan a home network that outgrew its own VLAN scheme |
 | [lookout](#lookout) | infra | CANDIDATE | M | The observability stack, and what it actually caught |
 | [holdfast](#holdfast) | infra | CANDIDATE | M | Backups you have actually restored from |
 | [chamber](#chamber) | hardware | CANDIDATE | M | Instrumented printer enclosure on ESP32 |
@@ -320,17 +320,21 @@ destroying the whole cluster on purpose.
 
 ## meshwork
 
-**Segmented home network.** VLANs for lab, IoT, and trusted; unbound with local
-DNS; WireGuard in; `ferry` at the edge.
+**Re-planning a network that grew a device at a time.** Three or four VLANs already
+exist; the problem is that their boundaries stopped describing anything real, and the
+primary subnet is running out of addresses.
 
-- **domain** infra · **effort** M
-- **stack** VLANs, unbound, WireGuard, nftables
+- **domain** infra · **status** planned · **effort** M
+- **stack** UniFi, VLANs, unbound, WireGuard
 
-Unglamorous and load-bearing. Also the natural home for `ferry` — a router
-project needs a network to be the router *for*, and the two projects cross-link.
+Better than a greenfield network post, because almost nobody is building one from
+scratch — they're all living in the version that grew organically. Address exhaustion
+is the forcing function that makes it real work with a deadline rather than tidying.
 
-**Devlog seeds:** the VLAN layout, and why · split-horizon DNS without regret ·
-IoT devices belong in jail.
+**Devlog seeds:** the VLANs I have and why they stopped meaning anything · sizing subnets
+for five years, not five months · starting from trust boundaries instead of the device
+list · re-addressing a live network the household depends on · what broke during the
+migration.
 
 ## lookout
 

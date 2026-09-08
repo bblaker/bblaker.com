@@ -17,7 +17,8 @@ const server = [
 
 const network = [
   { k: 'Gear', v: 'UniFi throughout' },
-  { k: 'Segmentation', v: 'Flat — VLANs planned' },
+  { k: 'Segmentation', v: '3–4 VLANs' },
+  { k: 'Pressure', v: 'Primary VLAN near address exhaustion' },
   { k: 'Cluster link', v: '1GbE' },
 ];
 
@@ -32,6 +33,7 @@ const cluster = [
 ];
 
 const printers = [
+  { k: 'Printing since', v: '2017' },
   { k: 'Primary', v: 'Prusa Core One + INDX' },
   { k: 'Nozzles', v: '8' },
   { k: 'In rebuild', v: '350 × 350 CoreXY' },
@@ -54,6 +56,7 @@ const lighting = [
 ];
 
 const desk = [
+  { k: 'OS', v: 'Omarchy Linux, or macOS' },
   { k: 'Editor', v: 'VS Code' },
   { k: 'Shell', v: 'zsh + tmux' },
   { k: 'Terminal', v: 'Ghostty' },
@@ -105,14 +108,20 @@ const thisSite = [
       <SectionHead label="Network" moreHref="/projects/meshwork/" moreLabel="meshwork" />
       <SpecTable rows={network} />
       <p class="verdict">
-        UniFi throughout, and flat — everything currently shares one broadcast domain, which
-        is fine right up until it isn't. Printers, IoT devices, the lab and the machines I
-        actually work on all have very different trust levels and none of that is enforced.
+        UniFi throughout, with three or four VLANs. The problem isn't that segmentation is
+        missing — it's that it grew a device at a time. Things landed wherever was convenient
+        rather than wherever they belonged, and the boundaries have quietly stopped meaning
+        anything.
       </p>
       <p class="verdict">
-        <strong>What I'd change:</strong> that, and it's the next infrastructure project.
-        Proper VLANs and subnets, with the lab firewalled off from everything I'd be upset to
-        lose. Planned as <a href="/projects/meshwork/">meshwork</a>.
+        The forcing function is address space: the primary VLAN is running out of it. That's
+        the useful kind of problem, because it makes a re-plan unavoidable rather than
+        merely advisable.
+      </p>
+      <p class="verdict">
+        <strong>What I'd change:</strong> start from the trust boundaries instead of the
+        device list, size the subnets for what they'll hold in five years, and only then work
+        out what moves where. Planned as <a href="/projects/meshwork/">meshwork</a>.
       </p>
     </section>
 
@@ -179,8 +188,9 @@ const thisSite = [
       <SectionHead label="Printers" moreHref="/projects/printers/" moreLabel="printers" />
       <SpecTable rows={printers} />
       <p class="verdict">
-        The Core One with the INDX add-on is the workhorse, and eight nozzles has changed what
-        I bother to attempt — multi-material stops being an event you plan around and becomes
+        Printing since 2017, with some version of a machine on the bench ever since. The Core
+        One with the INDX add-on is the workhorse now, and eight nozzles has changed what I
+        bother to attempt — multi-material stops being an event you plan around and becomes
         something you just do. The 350 is mid-rebuild, and a CocoaPress is currently being
         specced, because apparently I now need a printer that extrudes chocolate.
       </p>
@@ -199,6 +209,11 @@ const thisSite = [
         Boring on purpose. Everything here is reproducible on a fresh machine from a dotfiles
         repo in about ten minutes, which matters to me more than any individual tool being
         optimal.
+      </p>
+      <p class="verdict">
+        Linux when I get the choice, macOS when I don't, and enough overlap between the two
+        that moving between them costs nothing. The terminal is the part that has to be
+        identical; everything above it can differ.
       </p>
     </section>
 

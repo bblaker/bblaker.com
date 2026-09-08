@@ -1,13 +1,48 @@
 ---
 title: meshwork
-tagline: Segmented home network — VLANs for lab, IoT and trusted, split-horizon DNS, WireGuard in, ferry at the edge.
+tagline: Re-planning a home network that grew a device at a time — VLANs whose boundaries stopped meaning anything, and a primary subnet running out of addresses.
 domain: infra
 status: planned
 effort: M
 weight: 42
 stack: [UniFi, VLANs, unbound, WireGuard]
-tags: [networking, dns, wireguard]
+tags: [networking, dns, vlans, homelab]
 ---
 
-Unglamorous and load-bearing. It's also the network ferry needs to be the router for — a
-load balancer project is much more interesting when there's real topology behind it.
+There are already three or four VLANs. That's the part people assume is the hard bit,
+and it isn't. The hard bit is that they were added one at a time, each for a good reason
+at the time, and nothing has ever gone back to check whether the boundaries still
+describe anything real.
+
+Devices ended up wherever was convenient. A thing that should sit in the untrusted
+segment is on the primary one because that was the port that was free. Something in the
+lab segment needs to reach a service on the trusted one, so there's a rule for it, and
+then another rule, and eventually the segmentation is a diagram rather than a control.
+
+## The forcing function
+
+The primary VLAN is running out of address space.
+
+That's genuinely useful, because it converts "I should tidy this up sometime" into work
+with a deadline attached. Address exhaustion isn't negotiable and it isn't something you
+can put off by adding another firewall rule.
+
+## The approach
+
+Start from trust boundaries, not from the device list. The question isn't "where does
+this printer live" — it's "what categories of thing exist here, what should each be
+allowed to reach, and what happens when one of them is compromised." The device
+assignments fall out of that, rather than driving it.
+
+Then size the subnets for what they'll hold in five years rather than what they hold
+today, which is the mistake that produced the current situation.
+
+<Callout kind="gotcha" title="The migration is the risky part">
+Re-addressing a network that a household depends on, without a maintenance window,
+is the actual project. The plan is easy. Moving a live network onto it — with
+Home Assistant, printers, the cluster and everyone's devices attached — is where this
+either goes smoothly or becomes a story.
+</Callout>
+
+Being written up as I go, because the interesting part is the reasoning, not the final
+subnet table.

@@ -1,33 +1,61 @@
 ---
 title: printers
-tagline: The fleet, and the ongoing work of keeping three machines calibrated, modified, and actually printing.
+tagline: Printing since 2017, and building machines from scratch for most of that — the fleet, the rebuilds, and what each one taught me.
 domain: hardware
 status: maintained
 effort: XL
-started: 2022-06-01
+started: 2017-01-01
 weight: 50
-stack: [Klipper, Moonraker, PETG, ASA]
-tags: [3d-printing, klipper, maintenance]
+stack: [Prusa, CoreXY, PrusaSlicer, OrcaSlicer]
+tags: [3d-printing, corexy, hardware, builds]
 spec:
-  - { k: Machines, v: "3" }
-  - { k: Firmware, v: Klipper }
-  - { k: Largest volume, v: 350 × 350 × 350 }
-  - { k: Materials, v: PLA, PETG, ASA, TPU }
-  - { k: Uptime target, v: Best effort }
+  - { k: Printing since, v: "2017" }
+  - { k: Primary, v: Prusa Core One + INDX }
+  - { k: Nozzles, v: "8" }
+  - { k: In rebuild, v: 350 × 350 CoreXY }
+  - { k: Speccing, v: CocoaPress }
+  - { k: Previously, v: "Prusa Mini, Voron" }
+  - { k: Slicers, v: PrusaSlicer / OrcaSlicer }
 ---
 
-Three machines, all running Klipper, all modified past the point where the original
-manual is useful. This page is the fleet's home: every repair, mod, tuning session and
-failure gets a devlog entry here rather than disappearing into a notes file.
+I've been printing since 2017 and have had some version of a printer on the bench ever
+since. Machines have come and gone; the habit hasn't. This page is the fleet's home —
+repairs, mods, rebuilds and failures land here rather than disappearing into a notes
+file.
 
-## The standing setup
+## Building from scratch, on purpose
 
-Everything is on Klipper with Moonraker exposed to the network, which means printers
-are just another thing on the cluster's monitoring — chamber temperatures and print
-state land in the same Prometheus as the servers do. That turned out to be the single
-best quality-of-life change I've made.
+Most of these machines I assembled myself, and that's the point rather than a
+cost-saving measure. A printer you built is a printer you can fix. When something starts
+going wrong at layer 400 there is no substitute for having had every part in your hands
+once already — you know what's behind the panel, you know which fastener backs out, and
+you know what the machine sounded like when it was right.
 
-## What I actually spend time on
+It's also the fastest way I know to actually understand a mechanism. Reading about belt
+tension teaches you very little. Tensioning a gantry twice, badly, teaches you a lot.
 
-Not printing. First layers, belt tension, and the slow drift of a machine that's been
-running for a year. The mods that stuck are the boring ones.
+## The current fleet
+
+The **Prusa Core One with the INDX add-on** is the workhorse. Eight nozzles has changed
+what I bother to attempt: multi-material stops being an event you plan a whole evening
+around and becomes something you just do, which turns out to matter far more than any
+individual print it enables.
+
+The **350 × 350 CoreXY** is mid-rebuild. Large-format machines are their own discipline —
+everything that's a minor annoyance at 180mm is a structural problem at 350.
+
+A **CocoaPress** is currently being specced, because apparently the fleet now needs a
+printer that extrudes chocolate. Different material constraints entirely: temperature
+control matters in a way plastic never demanded.
+
+## What's gone
+
+A **Prusa Mini** and a **Voron**, both of which earned their keep as teachers. The Mini
+was the machine that made printing routine rather than an event. The Voron was where I
+learned that a machine you tuned yourself fails in ways you can predict.
+
+<Callout kind="note">
+Nothing here is a review. Every machine on this page was chosen for a reason and has
+annoyed me in some specific way since — that's the part worth writing down, and it never
+survives into a spec sheet.
+</Callout>
