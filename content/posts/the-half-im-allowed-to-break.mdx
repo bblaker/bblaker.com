@@ -10,16 +10,16 @@ tags: [homelab, sre, kubernetes, unraid]
 For a long time my homelab was one machine trying to do two jobs, and it was quietly bad
 at both.
 
-It held things I'd have been genuinely upset to lose — photos, backups, the media
-library the rest of the household expects to work. It was also where I tried things. Any
-new service, any upgrade, any half-understood idea went onto the same box. Which meant
-every experiment carried a small tax of guilt: if I broke this, I break something that
+It held things I'd have been genuinely upset to lose: photos, backups, the media library
+the rest of the household expects to work. It was also where I tried things. Any new
+service, any upgrade, any half-understood idea went onto the same box. Which meant every
+experiment carried a small tax of guilt: if I broke this, I break something that
 matters, and someone will notice, and it'll be my fault at an inconvenient hour.
 
 That tax is small enough to ignore and large enough to change your behaviour. I did
-fewer experiments. I did them more carefully, which sounds like a virtue and isn't — I
-mean I did them *timidly*, avoiding the interesting parts. I put off upgrades. I built up
-a quiet backlog of things I'd been meaning to try and hadn't, all for the same
+fewer experiments. I did them more carefully, which sounds like a virtue and isn't. I
+mean I did them *timidly*, avoiding the interesting parts. I put off upgrades. I built
+up a quiet backlog of things I'd been meaning to try and hadn't, all for the same
 unarticulated reason.
 
 ## Two jobs, in conflict
@@ -56,32 +56,32 @@ The rule that makes it work is embarrassingly simple:
 
 > If someone else in the house would notice it was down, it doesn't live on the cluster.
 
-That's it. Not a technical boundary — a *social* one. It turns out to be the only
+That's it. Not a technical boundary but a *social* one. It turns out to be the only
 criterion that actually holds, because it's the one you can evaluate honestly at the
 moment you're deciding where to deploy something.
 
 ## What changed
 
 The obvious thing is that I experiment more. The less obvious thing is that I experiment
-*differently*. When breaking something is free, you stop reaching for the safe version of
-the test. You pull the power on a node instead of draining it politely. You let etcd get
-unhappy on purpose to see what unhappy looks like. You find out what your monitoring
+*differently*. When breaking something is free, you stop reaching for the safe version
+of the test. You pull the power on a node instead of draining it politely. You let etcd
+get unhappy on purpose to see what unhappy looks like. You find out what your monitoring
 misses, which is the only way to learn what your monitoring misses.
 
 Almost everything I know about operating Kubernetes under stress, I learned on hardware
 where the stakes were zero. That transferred upward completely.
 
-The other change is that the Unraid box got *more* reliable, not less — because it
+The other change is that the Unraid box got *more* reliable, not less, because it
 stopped being the place where I tried things. Half its historical incidents were me.
 
 ## The third category
 
-There's a category the split doesn't cover, and it took me a while to notice: things that
-have to survive me tinkering with the lab at all.
+There's a category the split doesn't cover, and it took me a while to notice: things
+that have to survive me tinkering with the lab at all.
 
-This site is one of them. It would be neater to serve it from the cluster it talks about
-— there's a pleasing recursion to that, and I was tempted. But then an evening of
-experimenting takes my portfolio offline, and the failure mode is that the page
+This site is one of them. It would be neater to serve it from the cluster it talks
+about, and there's a pleasing recursion to that, and I was tempted. But then an evening
+of experimenting takes my portfolio offline, and the failure mode is that the page
 explaining my infrastructure is down *because* of my infrastructure. That's a worse joke
 than it is a demonstration.
 

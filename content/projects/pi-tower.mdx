@@ -1,6 +1,6 @@
 ---
 title: pi-tower
-tagline: Six Raspberry Pi 4s running k3s in a printed rack — the half of the homelab I'm allowed to break.
+tagline: Six Raspberry Pi 4s running k3s in a printed rack. The half of the homelab I'm allowed to break.
 domain: infra
 status: active
 effort: XL
@@ -27,7 +27,7 @@ on a gigabit network, and it is not fast. I've stopped treating that as a flaw.
 ## Why constrained hardware is the point
 
 The homelab is split in two. An Unraid box holds everything I'd be annoyed to lose and
-runs the services the household depends on — that machine has to work. This cluster is
+runs the services the household depends on. That machine has to work. This cluster is
 the other half: the one I'm allowed to break, at 11pm, on a Tuesday, without
 apologising to anyone.
 
@@ -44,12 +44,12 @@ physical volume to the cluster, which is how anything needing real persistence g
 <Callout kind="warn" title="Yes, it's a single point of failure">
 The shared volume lives on one disk attached to one node. If that node goes, everything
 bound to that PV goes with it. It works, it's obviously wrong, and fixing it properly is
-a bigger job than it sounds — which is exactly the kind of thing worth writing up rather
+a bigger job than it sounds, which is exactly the kind of thing worth writing up rather
 than quietly tolerating.
 </Callout>
 
 ## What's next
 
 NVMe hats. I expect storage latency to be the constraint that matters most, more than
-any tuning I could do first — but that's a hypothesis, not a result, and it stays on the
+any tuning I could do first, but that's a hypothesis, not a result, and it stays on the
 list until I've measured it.

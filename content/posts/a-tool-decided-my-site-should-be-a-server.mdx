@@ -8,7 +8,7 @@ tags: [cloudflare, astro, ci, tooling]
 ---
 
 This site is static. Prerendered HTML, no server, nothing running at request time. It
-built cleanly on Cloudflare — 32 pages, all assets, no errors:
+built cleanly on Cloudflare. 32 pages, all assets, no errors:
 
 ```
 [build] 32 page(s) built in 8.78s
@@ -35,7 +35,7 @@ answered on my behalf:
 
 It edited my Astro config to add the Cloudflare SSR adapter, flipping the build from
 `mode: "static"` to `mode: "server"`, then rebuilt. That second build died trying to
-bundle a native ELF binary — the rasteriser I use to generate OG images — into a Worker,
+bundle a native ELF binary (the rasteriser I use to generate OG images) into a Worker,
 where native code cannot run:
 
 ```
@@ -62,7 +62,7 @@ Commit a config, so auto-config never runs:
 }
 ```
 
-No `main` key. That's the load-bearing part — a `main` makes it a Worker *with a script*,
+No `main` key. That's the load-bearing part. A `main` makes it a Worker *with a script*,
 which is exactly what the adapter exists to produce and what dragged the native binary
 into the bundle.
 
@@ -70,15 +70,15 @@ into the bundle.
 
 I don't mind scaffolding tools. I mind two specific things.
 
-**A non-interactive default that says yes.** "No prompt available" and "the user consents"
-are not the same fact. Defaulting to `no` and printing what it *would* have done costs
-nothing and fails safely. Defaulting to `yes` means the tool takes an irreversible-ish
-action precisely when nobody is watching.
+**A non-interactive default that says yes.** "No prompt available" and "the user
+consents" are not the same fact. Defaulting to `no` and printing what it *would* have
+done costs nothing and fails safely. Defaulting to `yes` means the tool takes an
+irreversible-ish action precisely when nobody is watching.
 
 **A deploy step that edits source.** `deploy` should be a read of the build output. Once
 it can rewrite `astro.config.mjs`, the artifact it ships is no longer the one my build
-produced or the one I tested. Here it was loud and it failed. The version that worries me
-is the one where it succeeds and I don't notice for a month what changed.
+produced or the one I tested. Here it was loud and it failed. The version that worries
+me is the one where it succeeds and I don't notice for a month what changed.
 
 The tell was there in the log, incidentally: `mode: "server"` on a project that had said
 `mode: "static"` twenty lines earlier. Worth reading build logs even when they end in

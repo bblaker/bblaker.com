@@ -1,16 +1,16 @@
 ---
 title: The VLANs I have, and why they stopped meaning anything
-date: 2026-09-08
+date: 2026-08-17
 kind: log
 project: meshwork
 draft: true
-summary: Three or four VLANs, each added for a good reason, none of them describing anything real any more — and a primary subnet running out of addresses to force the issue.
+summary: Three or four VLANs, each added for a good reason, none of them describing anything real any more, and a primary subnet running out of addresses to force the issue.
 tags: [networking, vlans, unifi, homelab]
 ---
 
 Most home network posts are greenfield. Someone lays out a clean set of VLANs, assigns
-them tidy subnets, and presents the finished diagram. It's useful if you're starting from
-nothing, and almost nobody is starting from nothing.
+them tidy subnets, and presents the finished diagram. It's useful if you're starting
+from nothing, and almost nobody is starting from nothing.
 
 I have three or four VLANs already. That's the part people assume is the hard bit, and
 it isn't. The hard bit is that I added them one at a time, each for a perfectly good
@@ -22,7 +22,7 @@ boundaries still describe anything.
 Nobody decides to let their segmentation rot. It happens one reasonable decision at a
 time.
 
-A device needs to go somewhere. The segment it *should* live in is inconvenient — wrong
+A device needs to go somewhere. The segment it *should* live in is inconvenient: wrong
 switch, wrong SSID, wrong subnet for the thing it needs to talk to. So it goes on the
 primary VLAN, just for now, and now becomes eighteen months.
 
@@ -36,8 +36,8 @@ rules still work, and the segmentation no longer *does* anything. It's a diagram
 control. The boundaries are drawn but they don't hold, and worse, I can no longer tell
 you from memory which side of them any given device is on.
 
-That's the actual failure. Not that it's insecure in some specific demonstrable way —
-that I've lost the ability to reason about it.
+That's the actual failure. Not that it's insecure in some specific demonstrable way.
+It's that I've lost the ability to reason about it.
 
 ## The forcing function
 
@@ -49,8 +49,8 @@ deferring it. Address exhaustion isn't like that. You can't add another firewall
 make more addresses appear. It converts a vague intention into work with a deadline,
 which is the only reliable way I've ever got this kind of thing done.
 
-It's also diagnostic. The primary VLAN running out is *itself* the evidence that too much
-ended up there. If segmentation had held, the pressure would be distributed.
+It's also diagnostic. The primary VLAN running out is *itself* the evidence that too
+much ended up there. If segmentation had held, the pressure would be distributed.
 
 ## What I'm doing differently
 
@@ -61,18 +61,18 @@ should each be allowed to reach, and what's the blast radius when one is comprom
 Devices get sorted into that afterwards. The categories come first and they're the
 durable part.
 
-**Size for five years, not five months.** The current primary VLAN was sized for what was
-on it at the time. Every device since has been an argument with that decision. Subnets
-are free; renumbering is not.
+**Size for five years, not five months.** The current primary VLAN was sized for what
+was on it at the time. Every device since has been an argument with that decision.
+Subnets are free; renumbering is not.
 
-**Write down what each segment is *for*.** In words, somewhere I'll find it again. Most of
-the decay came from not having a stated rule to test a new device against — with no
+**Write down what each segment is *for*.** In words, somewhere I'll find it again. Most
+of the decay came from not having a stated rule to test a new device against. With no
 definition, "does this belong here?" has no answer, and the default answer becomes yes.
 
 ## The part that actually worries me
 
-The plan is the easy half. This is a live network that a household depends on — Home
-Assistant, door sensors, Z-Wave switches, printers, the cluster, everyone's phones and
+The plan is the easy half. This is a live network that a household depends on: Home
+Assistant, printers, the cluster, everyone's phones and
 laptops. Re-addressing it means moving all of that without a maintenance window and
 without a sympathetic audience.
 

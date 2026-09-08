@@ -1,6 +1,6 @@
 ---
 title: festoon
-tagline: A holiday lighting controller that stays powered on — diagnosing why the current one doesn't, then building something that does.
+tagline: A holiday lighting controller that stays powered on. Diagnosing why the current one doesn't, then building something that does.
 domain: hardware
 status: planned
 effort: M
@@ -26,7 +26,7 @@ The candidates, roughly in order of how likely I think they are:
   more current at full white than the arithmetic suggests, and a supply sized for average
   draw dies on peaks.
 - **Insufficient power injection.** Voltage drop along the run means the far end is dim
-  and the near end is fine — but the resulting current draw profile can also drag the
+  and the near end is fine, but the resulting current draw profile can also drag the
   controller's own supply down with it.
 - **Wi-Fi power management.** The ESP32 sleeping its radio and failing to come back
   cleanly looks identical to a power fault from the outside.

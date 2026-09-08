@@ -1,6 +1,6 @@
 ---
 title: ferry
-tagline: An L4/L7 edge router and load balancer in Go — Maglev hashing on an XDP fast path, with config that reloads without dropping a connection.
+tagline: An L4/L7 edge router and load balancer in Go, with Maglev hashing on an XDP fast path and config that reloads without dropping a connection.
 domain: software
 status: active
 effort: L
@@ -29,14 +29,14 @@ be honest about what it costs.
 ## What it actually does
 
 Two planes. The **data plane** is an XDP program attached to the NIC that hashes the
-5-tuple with Maglev and rewrites the destination — no copy, no allocation, and no trip
+5-tuple with Maglev and rewrites the destination: no copy, no allocation, and no trip
 through the kernel network stack for steady-state traffic. The **control plane** is
 ordinary Go: it watches Kubernetes `EndpointSlice` objects, rebuilds the backend table,
 and swaps it into an eBPF map atomically.
 
 The interesting constraint is that a backend table swap must never break an in-flight
-connection. Maglev gets most of the way there — it's designed so that removing one
-backend disturbs a minimal number of hash buckets — and a small connection-tracking
+connection. Maglev gets most of the way there. It's designed so that removing one
+backend disturbs a minimal number of hash buckets, and a small connection-tracking
 map covers the rest.
 
 <Callout kind="gotcha" title="The part I'm least sure about">
