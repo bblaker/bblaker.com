@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bblaker-com",
+  "compatibility_date": "2026-09-08",
+
+  // Static assets only. There is deliberately NO "main" key: adding one would
+  // make this a Worker with a script, and Astro would need the Cloudflare SSR
+  // adapter to produce it. This site is prerendered — there is nothing to run
+  // at request time.
+  //
+  // This file existing is also what stops `wrangler deploy` from running its
+  // auto-config flow, which (answering its own prompts in CI) rewrites
+  // astro.config.mjs to add that adapter and then fails to bundle the native
+  // resvg binary used for OG images.
+  "assets": {
+    "directory": "./dist",
+
+    // Serve our own 404.html for unmatched routes instead of Cloudflare's.
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
