@@ -1,47 +1,55 @@
 ---
 title: pi-tower
-tagline: Six Raspberry Pi 5s running k3s in a printed 10-inch rack. NVMe boot, PoE, and a monitoring stack that watches itself.
+tagline: Six Raspberry Pi 4s running k3s in a printed rack — the half of the homelab I'm allowed to break.
 domain: infra
 status: active
 effort: XL
 started: 2025-03-01
 featured: true
 weight: 90
-stack: [k3s, Cilium, Flux, Prometheus, Raspberry Pi 5]
+stack: [k3s, Cilium, Flux, Raspberry Pi 4]
 tags: [k3s, cilium, flux, homelab]
 links:
   - { label: "Cluster config · github", href: "https://github.com/bblaker/pi-tower" }
 spec:
-  - { k: Nodes, v: 6 × Pi 5 8GB }
-  - { k: Storage, v: 6 × 1TB NVMe }
-  - { k: Networking, v: PoE+, 2.5GbE }
-  - { k: Idle draw, v: "~48W" }
+  - { k: Nodes, v: 6 × Raspberry Pi 4 }
   - { k: Distribution, v: k3s }
+  - { k: Network, v: "1GbE, no PoE" }
+  - { k: Node storage, v: SSD }
+  - { k: Shared volume, v: USB-attached SSD as a PV }
   - { k: CNI, v: Cilium }
   - { k: GitOps, v: Flux }
 ---
 
-Six Raspberry Pi 5s in a rack I designed and printed, running k3s. It started as a
-way to stop breaking things at work and turned into the most useful piece of hardware
-I own — it runs my monitoring, backups, media, and whatever I'm currently building.
+Six Raspberry Pi 4s in a rack I designed and printed, running k3s. It's older hardware
+on a gigabit network, and it is not fast. I've stopped treating that as a flaw.
 
-## Why six
+## Why constrained hardware is the point
 
-Three would have been enough for a control plane and a couple of workloads. Six means
-I can drain two nodes at once and still have quorum, which is the difference between
-maintenance being a chore and maintenance being a thing I actually do. It also makes
-failure interesting rather than terminal: I can pull a node mid-afternoon and watch
-what happens.
+The homelab is split in two. An Unraid box holds everything I'd be annoyed to lose and
+runs the services the household depends on — that machine has to work. This cluster is
+the other half: the one I'm allowed to break, at 11pm, on a Tuesday, without
+apologising to anyone.
 
-## What it taught me
+Constrained hardware earns its keep in that role. Memory pressure, slow disks and a
+control plane that genuinely notices when a node goes away are all things a generous
+machine hides from you. Nearly everything I've learned here has transferred upward to
+clusters where the stakes were considerably higher.
 
-Mostly that the boring parts matter more than the clever ones. NVMe boot was worth
-more than any tuning I did. Cilium over flannel was worth it, but not for the reasons
-I expected. And the PoE budget is a real constraint that I got wrong the first time —
-that one is written up in the devlog.
+## The storage situation
 
-<Callout kind="note">
-This site is *not* served from here — it's static, and it lives on a CDN where it can't
-take the cluster down with it or vice versa. The cluster runs the things that actually
-need to be running.
+Each node boots from an SSD. One node additionally has a USB-attached SSD exposed as a
+physical volume to the cluster, which is how anything needing real persistence gets it.
+
+<Callout kind="warn" title="Yes, it's a single point of failure">
+The shared volume lives on one disk attached to one node. If that node goes, everything
+bound to that PV goes with it. It works, it's obviously wrong, and fixing it properly is
+a bigger job than it sounds — which is exactly the kind of thing worth writing up rather
+than quietly tolerating.
 </Callout>
+
+## What's next
+
+NVMe hats. I expect storage latency to be the constraint that matters most, more than
+any tuning I could do first — but that's a hypothesis, not a result, and it stays on the
+list until I've measured it.

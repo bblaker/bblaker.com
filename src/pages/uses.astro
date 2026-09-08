@@ -4,33 +4,60 @@ import SpecTable from '~/components/SpecTable.astro';
 import SectionHead from '~/components/SectionHead.astro';
 
 /**
- * Every figure here should be something you have actually measured or can
- * point at. A /uses page full of aspirational kit is worse than no /uses page.
+ * Every figure here is something that exists right now. Aspirational kit goes
+ * on the project backlog, not on this page.
  */
+const server = [
+  { k: 'Primary host', v: 'Unraid' },
+  { k: 'Storage', v: '30 TB' },
+  { k: 'Containers', v: 'Several dozen' },
+  { k: 'Virtual machines', v: 'Half a dozen' },
+  { k: 'Hypervisor nodes', v: '2 × Mac Mini, Proxmox' },
+];
+
+const network = [
+  { k: 'Gear', v: 'UniFi throughout' },
+  { k: 'Segmentation', v: 'Flat — VLANs planned' },
+  { k: 'Cluster link', v: '1GbE' },
+];
+
 const cluster = [
-  { k: 'Nodes', v: '6 × Raspberry Pi 5 8GB' },
-  { k: 'Storage', v: '6 × 1TB NVMe' },
-  { k: 'Network', v: '2.5GbE managed, PoE+' },
+  { k: 'Nodes', v: '6 × Raspberry Pi 4' },
   { k: 'Distribution', v: 'k3s' },
+  { k: 'Network', v: '1GbE, no PoE' },
+  { k: 'Node storage', v: 'SSD' },
+  { k: 'Shared volume', v: 'USB-attached SSD as a cluster PV' },
   { k: 'CNI', v: 'Cilium' },
   { k: 'GitOps', v: 'Flux' },
-  { k: 'Idle draw', v: '~48W' },
 ];
 
 const printers = [
-  { k: 'Machines', v: '3, all Klipper' },
-  { k: 'Largest volume', v: '350 × 350 × 350' },
-  { k: 'Materials', v: 'PLA, PETG, ASA, TPU' },
-  { k: 'Slicer', v: 'OrcaSlicer' },
-  { k: 'Monitoring', v: 'Moonraker → Prometheus' },
+  { k: 'Primary', v: 'Prusa Core One + INDX' },
+  { k: 'Nozzles', v: '8' },
+  { k: 'In rebuild', v: '350 × 350 CoreXY' },
+  { k: 'Speccing', v: 'CocoaPress' },
+  { k: 'Previously', v: 'Prusa Mini, Voron' },
+  { k: 'Slicer', v: 'PrusaSlicer / OrcaSlicer' },
+];
+
+const automation = [
+  { k: 'Platform', v: 'Home Assistant' },
+  { k: 'Protocol', v: 'Z-Wave' },
+  { k: 'Sensors', v: 'Doors and windows throughout' },
+  { k: 'Control', v: 'Switches and plugs throughout' },
+];
+
+const lighting = [
+  { k: 'Installs', v: 'Permanent and seasonal' },
+  { k: 'Cadence', v: 'A new show every year' },
+  { k: 'Approach', v: 'DIY, sequenced from scratch' },
 ];
 
 const desk = [
-  { k: 'Editor', v: 'Neovim' },
+  { k: 'Editor', v: 'VS Code' },
   { k: 'Shell', v: 'zsh + tmux' },
   { k: 'Terminal', v: 'Ghostty' },
   { k: 'Font', v: 'IBM Plex Mono' },
-  { k: 'Languages', v: 'Go, TypeScript' },
 ];
 
 const thisSite = [
@@ -44,7 +71,7 @@ const thisSite = [
 ---
 <Base
   title="Uses"
-  description="The hardware I run, the printers I maintain, and the tools I work in — with what I'd change."
+  description="The hardware I run, the printers I build and maintain, and the tools I work in — with what I'd change."
   section="uses"
 >
   <article class="post-wrap">
@@ -55,17 +82,91 @@ const thisSite = [
     </p>
 
     <section class="section">
+      <SectionHead label="Server" />
+      <SpecTable rows={server} />
+      <p class="verdict">
+        The Unraid box is the boring half of the homelab, and that's deliberate. It holds
+        everything I'd be annoyed to lose and runs the services other people in the house
+        depend on, which means it is explicitly <strong>not</strong> where I experiment.
+      </p>
+      <p class="verdict">
+        Splitting the lab in two — one machine that has to work, one cluster I'm allowed to
+        break — was the change that made the whole thing sustainable. Before that, every
+        experiment carried a small tax of guilt.
+      </p>
+      <p class="verdict">
+        The two Mac Minis are older machines running Proxmox, currently being repurposed.
+        Second-hand Apple hardware makes a surprisingly good hypervisor node: quiet, low
+        power, and available cheaply precisely because nobody wants a Mac they can't update.
+      </p>
+    </section>
+
+    <section class="section">
+      <SectionHead label="Network" moreHref="/projects/meshwork/" moreLabel="meshwork" />
+      <SpecTable rows={network} />
+      <p class="verdict">
+        UniFi throughout, and flat — everything currently shares one broadcast domain, which
+        is fine right up until it isn't. Printers, IoT devices, the lab and the machines I
+        actually work on all have very different trust levels and none of that is enforced.
+      </p>
+      <p class="verdict">
+        <strong>What I'd change:</strong> that, and it's the next infrastructure project.
+        Proper VLANs and subnets, with the lab firewalled off from everything I'd be upset to
+        lose. Planned as <a href="/projects/meshwork/">meshwork</a>.
+      </p>
+    </section>
+
+    <section class="section">
       <SectionHead label="Cluster" moreHref="/projects/pi-tower/" moreLabel="pi-tower" />
       <SpecTable rows={cluster} />
       <p class="verdict">
-        Six nodes rather than three, so I can drain two for maintenance and still have quorum.
-        That sounds like over-provisioning until the first time you'd otherwise have postponed
-        an upgrade for a fortnight.
+        Six Pi 4s on gigabit, booting from SSD. It is not fast, and I've stopped treating that
+        as a flaw. Constrained hardware surfaces problems that generous hardware hides — memory
+        pressure, slow disks, a control plane that actually notices when a node goes away.
+        Everything I've learned here transferred upward.
       </p>
       <p class="verdict">
-        <strong>What I'd change:</strong> nothing about the topology, everything about the
-        order I did it in. NVMe boot was worth more than every tuning change I made before it,
-        and I made a lot of them first.
+        The shared volume is a single USB-attached SSD exposed as a physical volume to the
+        cluster. It works, and it is obviously a single point of failure. I know.
+      </p>
+      <p class="verdict">
+        <strong>What I'd change:</strong> NVMe hats are the next real upgrade, and I expect
+        storage latency to matter more than any tuning I could do first. That's on the
+        <a href="/projects/#backlog">backlog</a> rather than written up here as though it were
+        already done.
+      </p>
+    </section>
+
+    <section class="section">
+      <SectionHead label="Automation" moreHref="/projects/chamber/" moreLabel="chamber" />
+      <SpecTable rows={automation} />
+      <p class="verdict">
+        Home Assistant runs the house: contact sensors on every door and window, Z-Wave
+        switches and plugs throughout, and as much of the routine behaviour automated as I can
+        justify. The rule I hold to is that automation has to be strictly better than the
+        manual version — a light that guesses wrong is worse than a switch.
+      </p>
+      <p class="verdict">
+        It's the same appeal as the cluster, pointed at the house. A system you can query,
+        script and reason about beats a collection of appliances that each know one thing.
+        Putting printer telemetry on the same platform is what
+        <a href="/projects/chamber/">chamber</a> is for.
+      </p>
+    </section>
+
+    <section class="section">
+      <SectionHead label="Holiday lighting" />
+      <SpecTable rows={lighting} />
+      <p class="verdict">
+        DIY, permanent installs plus seasonal additions, and a new show sequenced every year.
+        It's the most complete version of everything else on this page in one project:
+        electronics, physical installation, a scheduling problem, and software that has to run
+        unattended in the cold with an audience.
+      </p>
+      <p class="verdict">
+        It also has the hardest deadline I work to all year. The show ships in December
+        whether or not it's finished, which is a useful annual reminder that shipping and
+        finishing are different things.
       </p>
     </section>
 
@@ -73,14 +174,16 @@ const thisSite = [
       <SectionHead label="Printers" moreHref="/projects/printers/" moreLabel="printers" />
       <SpecTable rows={printers} />
       <p class="verdict">
-        All three run Klipper, which is less about speed than about the machine being
-        introspectable — config in a text file, macros I can read, and metrics I can scrape.
-        A printer I can't query is a printer I can't debug.
+        The Core One with the INDX add-on is the workhorse, and eight nozzles has changed what
+        I bother to attempt — multi-material stops being an event you plan around and becomes
+        something you just do. The 350 is mid-rebuild, and a CocoaPress is currently being
+        specced, because apparently I now need a printer that extrudes chocolate.
       </p>
       <p class="verdict">
-        <strong>What I'd change:</strong> I'd have consolidated on one toolhead ecosystem
-        earlier. Three machines with three different hotends means three sets of spares and
-        three sets of habits.
+        <strong>I build printers from scratch on purpose.</strong> A machine you assembled is
+        a machine you can fix, and there's no substitute for having had every part in your
+        hands when something starts going wrong at layer 400. The Mini and the Voron are gone
+        but both earned their keep as teachers.
       </p>
     </section>
 
@@ -88,9 +191,9 @@ const thisSite = [
       <SectionHead label="Desk" />
       <SpecTable rows={desk} />
       <p class="verdict">
-        Boring on purpose. Everything here is something I can reproduce on a fresh machine
-        from a dotfiles repo in about ten minutes, which matters more to me than any individual
-        tool being optimal.
+        Boring on purpose. Everything here is reproducible on a fresh machine from a dotfiles
+        repo in about ten minutes, which matters to me more than any individual tool being
+        optimal.
       </p>
     </section>
 
@@ -99,12 +202,12 @@ const thisSite = [
       <SpecTable rows={thisSite} />
       <p class="verdict">
         Static, no client JavaScript, no framework CSS. Content is MDX validated against Zod
-        schemas at build time, so a malformed post fails CI rather than shipping broken.
+        schemas at build time, so a malformed post fails the build rather than shipping broken.
       </p>
       <p class="verdict">
         <strong>Deliberately not self-hosted.</strong> It would be neater to serve this from
         the cluster it talks about, but then an evening of tinkering takes the portfolio down
-        with it. The cluster runs the things that need to be running.
+        with it. The cluster is the half I'm allowed to break.
       </p>
     </section>
   </article>
