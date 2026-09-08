@@ -1,0 +1,95 @@
+---
+title: You can't give good support from a summary
+date: 2026-09-08
+kind: essay
+draft: true
+summary: The higher you go, the more you're asked to have opinions about work you haven't looked at. Nearly two decades in, the thing I protect hardest is my ability to open the code.
+tags: [leadership, engineering, career]
+---
+
+The most common way senior people become useless is gradual and nobody flags it, because
+every individual step looks like good delegation.
+
+You stop writing the code. Reasonable — you have other work, and someone else should be
+doing it anyway. Then you stop reading the code, because you're being briefed on it
+instead and the briefing is faster. Then you start having opinions based on the briefing.
+And because you're senior, those opinions carry weight they haven't earned, and people
+act on them.
+
+Nobody notices, including you. The feedback loop that would tell you you're wrong got
+removed somewhere around step two.
+
+## What a summary loses
+
+A summary is a lossy encoding produced by someone who has already decided what matters.
+That's not a criticism — it's what a summary *is*. But the compression is where the
+interesting things live.
+
+"We're seeing intermittent timeouts on the payments service" is a true and useful
+sentence that also silently discards: which timeouts, at what layer, correlated with
+what, on which deploy, and whether the thing everyone's calling a timeout is even the
+same event. I've watched a room spend forty minutes on a hypothesis that a thirty-second
+look at the actual traces would have eliminated.
+
+More subtly, a summary encodes the author's model of the problem. If their model is
+wrong, everything downstream inherits the error, and you can't see the error from inside
+the summary. It's *self-consistent*. That's what makes it dangerous.
+
+The person describing the problem is usually the person closest to it and most likely to
+be right. The point isn't that they're unreliable. It's that if I'm going to add
+anything, it has to come from somewhere their description doesn't already reach — and
+there's exactly one place that is.
+
+## Confident and wrong is worse than absent
+
+If I don't look and say nothing, I've contributed nothing. Neutral outcome.
+
+If I don't look and offer a confident opinion anyway, I've done real damage. Not because
+I'm always wrong — I'm right often enough that it's hard to notice the pattern — but
+because my confidence isn't calibrated to my evidence, and my seniority means nobody
+discounts it appropriately. A junior engineer with a hunch gets asked for evidence. I
+don't, and that asymmetry is the problem.
+
+The worst version: I'm wrong, someone junior can tell I'm wrong, and the cost of saying
+so exceeds the cost of just doing what I said. Now I've spent their time and taught them
+that the technical merits aren't what decides things here. I've done that. It's not
+recoverable in a single conversation.
+
+## This is not the same as taking the work
+
+The objection I get is that this is micromanagement in a nicer outfit. It isn't, and the
+distinction is sharp.
+
+**I read the diff. I don't write it.** The purpose is calibration, not control. I want to
+know what the code actually looks like so that my opinions have something behind them —
+not to substitute my judgement for the person who's been living in it.
+
+The tell is what I do with what I find. If I open a PR and start rewriting it, that's
+micromanagement. If I open it so that when someone says "this is getting hard to change,"
+I know precisely what they mean and can back them, that's the opposite. The work stays
+theirs. What changes is whether my support is worth anything.
+
+It's also the fastest way to find out that someone is right and I've been wrong for
+three weeks, which is information I'd rather have.
+
+## Keeping it
+
+It doesn't survive on good intentions; the calendar wins. Some things that have worked:
+
+**Keep a checkout of everything you have opinions about.** Not to contribute — so that
+"let me look" is fifteen seconds rather than a request to someone.
+
+**Read PRs you're not on.** Not to review them. To keep a live model of what the codebase
+is actually becoming, which drifts from your mental image alarmingly fast.
+
+**Own something small and real.** A tool, a script, a service nobody would notice you'd
+dropped. Enough to stay honest about how long things take and how annoying your own
+build system is.
+
+**Say "I haven't looked" out loud.** It costs less than you think and it's the single
+most effective thing on this list. It marks the opinion as low-confidence in a way people
+can act on, and — more usefully — it makes the gap uncomfortable enough that you go and
+close it.
+
+Twenty years in, the thing I protect hardest isn't my time or my calendar. It's the
+ability to open the thing and look.

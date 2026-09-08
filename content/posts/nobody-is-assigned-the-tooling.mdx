@@ -1,0 +1,89 @@
+---
+title: Nobody is assigned to build the tooling
+date: 2026-09-08
+kind: essay
+draft: true
+summary: The work that makes every engineer faster reliably belongs to no team, appears on no roadmap, and gets built by whoever is annoyed enough. That's a structural problem, not a motivation one.
+tags: [platform, tooling, engineering, leadership]
+---
+
+Every organisation I've worked in has had a pile of work that would make everyone
+measurably faster, that everyone agrees is worth doing, and that never gets done.
+
+The local dev setup that takes a day and a half and a colleague's help. The deploy that
+requires three manual steps someone has to remember. The test suite everyone runs with
+`-k` and a guess. The script four teams have each written a worse private version of.
+
+Nobody is against fixing any of it. It just never gets assigned, and it's worth being
+precise about why, because "people don't care about developer experience" is the wrong
+diagnosis and leads to the wrong fix.
+
+## The structural reason
+
+Tooling work has a distribution problem. The cost lands on one team; the benefit spreads
+across all of them.
+
+If I'm running a team with a roadmap, spending three weeks on a build system that makes
+eight teams 10% faster is, from where I'm measured, three weeks of not shipping. The
+return is real and large and it lands almost entirely on other people's numbers. Do that
+consistently and I look like the team that doesn't deliver — while being the team that
+delivered the most.
+
+So it goes on the list, stays on the list, and gets bumped every quarter by something with
+a name attached. Not because anyone is wrong at any step. Each individual prioritisation
+call is defensible. The aggregate is that a whole category of high-return work is
+structurally unownable.
+
+You can see this most clearly in how it *does* eventually get built: by someone annoyed
+enough to do it off the books, usually at the wrong time, usually alone, and often without
+the mandate to make anyone actually adopt it.
+
+## Why the obvious fixes underdeliver
+
+**"Make a platform team."** Helps, and it's what I'd do — but it can just relocate the
+problem. A platform team with a roadmap handed down from elsewhere ends up building the
+things that were legible enough to make someone's plan, which are rarely the same as the
+things costing everyone an hour a day. The friction that matters most is often too small
+to write a ticket about and too constant to notice.
+
+**"Twenty percent time."** Diffuse. Tooling wants sustained attention from someone who
+understands the whole path, not scattered hours from people optimising their own local
+annoyance.
+
+**"Let engineers self-serve."** This is how you get the fourth private copy of the same
+script.
+
+What actually works, in my experience, is less satisfying: someone with enough seniority
+to absorb the roadmap cost decides this is real work, names it, and defends it when it
+looks like nothing is shipping. It's a political act more than a technical one.
+
+## Why I keep doing it anyway
+
+Most of what I've built that I'm proud of falls in this category, and it isn't
+altruism — it's that this work has properties I like.
+
+The feedback is immediate and honest. Nobody is polite about a tool. If it's bad, people
+route around it, silently, and you find out by noticing they've stopped using it. That's
+a harsher and better signal than most product work ever gets.
+
+The constraints are real. Tooling has to work on everyone's machine, in CI, on the one
+person's setup that's different, and on the worst day of the release cycle. That's a
+proper engineering problem, and it's the reason "just write a script" so rarely holds.
+
+And the leverage is genuinely nonlinear in a way very little else is. Ten minutes off
+every deploy, times a team, times a year, is a headcount. The arithmetic isn't subtle.
+It's just that nobody's compensation is attached to it.
+
+## What I'd tell someone earlier in their career
+
+Build it. Not instead of your actual work — alongside it, small, and for yourself first.
+
+The version of this that fails is the six-week ambitious platform nobody asked for. The
+version that works is a thing that solves your own daily annoyance, that you use every
+day, that someone notices over your shoulder and asks for. Adoption you didn't have to
+argue for is the only durable kind.
+
+Then be slightly shameless about it. The work is invisible by nature — that's the entire
+problem — so if you don't say what it saved, in numbers, nobody will infer it. Not
+self-promotion. Making legible something that genuinely happened and otherwise won't be
+counted.
