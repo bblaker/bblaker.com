@@ -8,21 +8,26 @@
 :root {
   color-scheme: dark;
 
-  --bg:        #0B0A09;   /* warm near-black, so amber sits inside the palette */
-  --surface:   #131110;
-  --surface-2: #1A1715;
-  --line:      #29231F;
-  --line-hi:   #3A322C;
-  --text:      #E9E4DD;
-  --text-body: #CFC8C0;
-  --muted:     #8B8279;
-  --dim:       #5E574F;
+  /* Cool neutrals. The slight blue bias is deliberate: it keeps the green
+     accent reading as phosphor rather than as something warm and organic. */
+  --bg:        #0A0C0D;
+  --surface:   #111517;
+  --surface-2: #171C1E;
+  --line:      #1F2629;
+  --line-hi:   #2D373A;
+  --text:      #E3E8E9;
+  --text-body: #C6CFD1;
+  --muted:     #8A9496;
+  --dim:       #5C6668;
 
-  --accent:    #FFB454;   /* interaction, and the "active" state only */
-  --sw:        #6FC3E8;   /* software */
-  --inf:       #B79BFF;   /* infra */
-  --hw:        #E8886A;   /* hardware */
-  --ok:        #6FCF8A;   /* shipped */
+  /* Three orthogonal channels, so nothing has to carry two meanings:
+       hue       = category  (software / infra / hardware)
+       luminance = state     (active is brightest, planned is dimmest)
+       accent    = interaction, and nothing else                        */
+  --accent:    #7DD88F;   /* phosphor green: links, focus, the mark */
+  --sw:        #63C8EC;   /* software */
+  --inf:       #A99BFF;   /* infra */
+  --hw:        #E8836F;   /* hardware */
 
   --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --cond: "IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
@@ -103,10 +108,11 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .chip[data-domain="software"] { color: var(--sw);  border-color: color-mix(in srgb, var(--sw) 34%, var(--line)); }
 .chip[data-domain="infra"]    { color: var(--inf); border-color: color-mix(in srgb, var(--inf) 34%, var(--line)); }
 .chip[data-domain="hardware"] { color: var(--hw);  border-color: color-mix(in srgb, var(--hw) 34%, var(--line)); }
-.chip[data-status="active"]   { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 34%, var(--line)); }
-.chip[data-status="shipped"]  { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 30%, var(--line)); }
-.chip[data-status="archived"] { color: var(--dim); }
-.chip[data-status="planned"]  { color: var(--dim); }
+.chip[data-status="active"]     { color: var(--text); border-color: var(--line-hi); }
+.chip[data-status="shipped"]    { color: var(--muted); }
+.chip[data-status="maintained"] { color: var(--muted); }
+.chip[data-status="archived"]   { color: var(--dim); }
+.chip[data-status="planned"]    { color: var(--dim); }
 
 .chips { display: flex; gap: 7px; flex-wrap: wrap; }
 
@@ -114,7 +120,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
    the sections aren't a sequence, so numbers would encode nothing. */
 .shead { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
 .shead .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text); }
-.shead .cnt { font-family: var(--mono); font-size: 11px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.shead .cnt { font-family: var(--mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .shead .rule { flex: 1; height: 1px; background: var(--line); }
 .shead .more { font-family: var(--mono); font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
 .shead .more:hover { color: var(--accent); text-decoration: none; }
@@ -243,7 +249,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .dl-row { display: grid; grid-template-columns: 44px 96px 1fr auto; gap: 14px; align-items: baseline; padding: 12px 4px; border-bottom: 1px solid var(--line); }
 .dl-row:first-child { border-top: 1px solid var(--line); }
-.dl-row .n { font-family: var(--mono); font-size: 11.5px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.dl-row .n { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .dl-row .date { font-family: var(--mono); font-size: 11.5px; color: var(--dim); font-variant-numeric: tabular-nums; }
 .dl-row .t a { color: var(--text); font-size: 15px; }
 .dl-row .t a:hover { color: var(--accent); text-decoration: none; }
@@ -278,7 +284,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .prose :not(pre) > code {
   font-family: var(--mono);
   font-size: 0.88em;
-  color: var(--accent);
+  color: var(--text);
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: 2px;
@@ -306,7 +312,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .cmp-bar { display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: var(--surface-2); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
 .cmp-bar .tagname { color: var(--muted); }
 .cmp pre { margin: 0; padding: 14px 16px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.65; color: var(--text-body); }
-.cmp .pr { color: var(--ok); }
+.cmp .pr { color: var(--accent); }
 .cmp .cmd { color: var(--text); }
 .cmp .out { color: var(--muted); }
 

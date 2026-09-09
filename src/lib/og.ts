@@ -16,15 +16,15 @@ const [cond, mono, sans] = await Promise.all([
 
 /** Same tokens as the site. An OG card that doesn't match the page is a wasted impression. */
 const C = {
-  bg: '#0B0A09',
-  line: '#29231F',
-  text: '#E9E4DD',
-  muted: '#8B8279',
-  dim: '#5E574F',
-  accent: '#FFB454',
-  software: '#6FC3E8',
-  infra: '#B79BFF',
-  hardware: '#E8886A',
+  bg: '#0A0C0D',
+  line: '#1F2629',
+  text: '#E3E8E9',
+  muted: '#8A9496',
+  dim: '#5C6668',
+  accent: '#7DD88F',
+  software: '#63C8EC',
+  infra: '#A99BFF',
+  hardware: '#E8836F',
 } as const;
 
 export interface OgInput {

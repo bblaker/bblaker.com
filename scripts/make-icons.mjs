@@ -12,9 +12,9 @@ import { resolve } from 'node:path';
 
 const cond = await readFile(resolve('src/assets/fonts/plex-cond-700.ttf'));
 
-const BG = '#0B0A09';
-const INK = '#E9E4DD';
-const ACCENT = '#FFB454';
+const BG = '#0A0C0D';
+const INK = '#E3E8E9';
+const ACCENT = '#7DD88F';
 
 /** @param {number} size */
 const mark = (size) => ({
@@ -28,7 +28,7 @@ const mark = (size) => ({
       justifyContent: 'center',
       backgroundColor: BG,
       // A hairline inset edge, the same device the whole site uses.
-      boxShadow: `inset 0 0 0 ${Math.max(1, Math.round(size * 0.016))}px #29231F`,
+      boxShadow: `inset 0 0 0 ${Math.max(1, Math.round(size * 0.016))}px #1F2629`,
     },
     children: [
       {
