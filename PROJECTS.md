@@ -79,7 +79,7 @@ written down than reconstructed.
 reconciliation. Nothing else.
 
 - **domain** software · **status** active · **effort** M
-- **stack** TypeScript, React, Cloudflare Workers, D1
+- **stack** TypeScript, React, Cloudflare Workers, D1, MCP
 
 The interesting content is not the CRUD, it's the build-vs-buy maths having moved. The
 good tools are priced for agencies and carry features that will never be opened; the
@@ -91,9 +91,15 @@ Storage settled on D1 rather than KV, and the reasoning is on the page: the data
 relational, the queries are the application, and issuing an invoice needs to be atomic or
 it double-bills. KV's edge-scale throughput is a benefit this app will never collect.
 
+Next on the list after the core four: a basic MCP server, so time entry happens in a
+sentence rather than a form. Framed as a second interface rather than a fifth feature —
+prompt for writing, screen for reading — with invoicing deliberately withheld from it
+until the thing has been watched for a while.
+
 **Devlog seeds:** the build-vs-buy maths, recalculated · four features and no fifth · why
-D1 and not KV · the schema, and what an invoice actually needs to contain · migrations on
-a database with one user · resisting the fifth feature.
+D1 and not KV · the schema, and what an invoice actually needs to contain · an MCP server
+over the same handlers · what I refuse to let a prompt do to my books · migrations on a
+database with one user · resisting the fifth feature.
 
 ## pi-tower
 

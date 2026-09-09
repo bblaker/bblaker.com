@@ -7,13 +7,14 @@ effort: M
 started: 2026-09-09
 weight: 95
 stack: [TypeScript, React, Cloudflare Workers, D1]
-tags: [typescript, react, cloudflare, invoicing, consulting]
+tags: [typescript, react, cloudflare, d1, mcp, invoicing, consulting]
 spec:
   - { k: Users, v: "1" }
   - { k: Frontend, v: React }
   - { k: Runtime, v: Cloudflare Workers }
   - { k: Storage, v: Cloudflare D1 (SQLite) }
   - { k: Scope, v: "Clients, time, invoices, reconciliation" }
+  - { k: Next, v: MCP server }
 ---
 
 Consulting time tracking is a solved problem with no good answer at my size. The tools
@@ -84,6 +85,36 @@ at every edge" property goes away. For one user in one place, that's not a cost 
 even measure. The real one is schema migrations — a known problem with known tooling,
 which is exactly why I'd rather own it than own a hand-rolled index scheme with no tools
 at all.
+</Callout>
+
+## Next: drive it from a prompt
+
+A basic MCP server, so the whole thing is reachable from a Claude prompt. This is next on
+the list, and it is deliberately not a fifth feature — it's a second interface to the four
+that already exist.
+
+The argument for it is sitting in my own success criterion below: *log an hour in under
+five seconds*. No form achieves that. Opening a tab, finding the client, picking the
+engagement, typing a duration and a description, saving — that is thirty seconds of
+overhead on a two-minute task, and it's the action I take a dozen times a week. Whereas
+"log 90 minutes to Acme for the migration call" is one sentence, typed where I already
+am, in the tool I already have open.
+
+That suggests a clean split rather than a bolt-on. **Prompt for writing, screen for
+reading.** Time entry, the highest-frequency and lowest-ceremony action, belongs in a
+sentence. Invoice states, reconciliation and what's owed belong on a screen, because
+those are things you need to *see* laid out, compared, and totalled.
+
+It also costs almost nothing to build here. The backend is already a Worker with a typed
+data layer; an MCP server over the same handlers is a thin surface, not a parallel
+implementation.
+
+<Callout kind="warn" title="Write access, and what I'll withhold">
+A natural-language interface that can issue invoices is a write-capable financial tool
+driven by an LLM. Logging time is cheap to get wrong and trivial to correct. Issuing an
+invoice to a client, or marking one paid, is not — those touch someone else's
+expectations and my own books. The first version gets reads and time entry only.
+Invoicing stays behind the UI until I've watched the thing behave for a few months.
 </Callout>
 
 ## What done looks like
