@@ -18,7 +18,7 @@ const href = `/projects/${project.id}/`;
   </div>
   <p>{tagline}</p>
   {stack.length > 0 && (
-    <div class="foot"><span class="stack-list">{stack.slice(0, 4).join(' · ')}</span></div>
+    <div class="card-foot"><span class="stack-list">{stack.slice(0, 4).join(' · ')}</span></div>
   )}
   {tags.length > 0 && (
     <ul class="tags">{tags.slice(0, 4).map((t) => <li>{t}</li>)}</ul>

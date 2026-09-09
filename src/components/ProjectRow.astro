@@ -7,7 +7,7 @@ const { title, tagline, domain, status, effort } = project.data;
 ---
 <div class="row-p">
   <i class="d" data-domain={domain} aria-hidden="true"></i>
-  <span class="sl">{title}</span>
+  <span class="sl"><a href={`/projects/${project.id}/`}>{title}</a></span>
   <span class="tg">{tagline}</span>
   <span class="st">{status}</span>
   <span class="ef" title={`Effort: ${effort}`}>{effort}</span>
