@@ -20,6 +20,7 @@ Effort is evenings-and-weekends: **S** ≈ a weekend · **M** ≈ a few weeks ·
 | Slug | Domain | State | Effort | One line |
 |---|---|---|---|---|
 | [ferry](#ferry) | software | REAL | L | Go L4/L7 edge router and load balancer |
+| [punchline](#punchline) | software | REAL | M | Consulting time cards and invoicing, built for one user |
 | [pi-tower](#pi-tower) | infra | REAL | XL | Six Pi 5s running k3s in a printed rack |
 | [printers](#printers) | hardware | REAL | XL | The fleet, and keeping it running |
 | [drift](#drift) | software | CARRIED | M | Terraform drift detection that pages only on surprises |
@@ -43,7 +44,7 @@ Effort is evenings-and-weekends: **S** ≈ a weekend · **M** ≈ a few weeks ·
 | [rack](#rack) | hardware | CANDIDATE | M | The printed 10" rack, designed properly |
 | [sortbrick](#sortbrick) | hardware | CANDIDATE | XL | Lego sorting machine — CV plus a printed feeder |
 
-Current mix: **12 software · 5 infra · 6 hardware**. That ratio is deliberate —
+Current mix: **13 software · 5 infra · 6 hardware**. That ratio is deliberate —
 it puts software first on `/projects` without pretending the rest isn't there.
 
 ---
@@ -71,6 +72,27 @@ the first time it served real traffic · what I got wrong about atomic map swaps
 
 **Start the project page before the code.** Day-one uncertainty is more interesting
 written down than reconstructed.
+
+## punchline
+
+**Consulting time cards and invoicing, for exactly one user.** Clients, time, invoices,
+reconciliation. Nothing else.
+
+- **domain** software · **status** active · **effort** M
+- **stack** TypeScript, React, Cloudflare Workers, Workers KV
+
+The interesting content is not the CRUD, it's the build-vs-buy maths having moved. The
+good tools are priced for agencies and carry features that will never be opened; the
+cheap ones are rigid exactly where it hurts. Building the replacement was never worth
+several weekends before, and now it is — which is a claim worth testing in public rather
+than asserting.
+
+Storage is the live technical question: KV is eventually consistent with no secondary
+indexes, and invoicing wants precisely the queries it handles worst.
+
+**Devlog seeds:** the build-vs-buy maths, recalculated · four features and no fifth ·
+hand-rolling index keys until I've built a bad database · moving to D1 and admitting SQL
+was right · what an invoice actually needs to contain · resisting the fifth feature.
 
 ## pi-tower
 
