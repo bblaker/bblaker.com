@@ -1,0 +1,427 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-09T15:19:41.635733Z",
+  "title": "Design System: bblaker.com",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Ground",
+        "canonical": "#0A0C0D",
+        "tonalRamp": [
+          "#090B0C",
+          "#232527",
+          "#404244",
+          "#5F6263",
+          "#808384",
+          "#A3A5A7",
+          "#C7CACB",
+          "#ECEFF1"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#111517",
+        "tonalRamp": [
+          "#080C0E",
+          "#212628",
+          "#3E4345",
+          "#5D6265",
+          "#7E8386",
+          "#A0A6A9",
+          "#C4CACD",
+          "#EAEFF2"
+        ]
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "Surface Raised",
+        "canonical": "#171C1E",
+        "tonalRamp": [
+          "#080C0E",
+          "#212628",
+          "#3D4345",
+          "#5C6265",
+          "#7D8386",
+          "#A0A6A9",
+          "#C4CACD",
+          "#E9F0F3"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#1F2629",
+        "tonalRamp": [
+          "#060C0F",
+          "#1F2629",
+          "#3C4347",
+          "#5B6366",
+          "#7B8488",
+          "#9EA7AA",
+          "#C2CBCF",
+          "#E7F0F4"
+        ]
+      },
+      "line-bright": {
+        "role": "neutral",
+        "displayName": "Line Bright",
+        "canonical": "#2D373A",
+        "tonalRamp": [
+          "#050D0F",
+          "#1D272A",
+          "#3A4447",
+          "#586367",
+          "#798588",
+          "#9CA7AB",
+          "#BFCCCF",
+          "#E4F1F5"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Text",
+        "canonical": "#E3E8E9",
+        "tonalRamp": [
+          "#090C0C",
+          "#222627",
+          "#3F4344",
+          "#5E6263",
+          "#7F8384",
+          "#A1A6A7",
+          "#C5CACB",
+          "#EAEFF0"
+        ]
+      },
+      "text-body": {
+        "role": "neutral",
+        "displayName": "Text Body",
+        "canonical": "#C6CFD1",
+        "tonalRamp": [
+          "#070C0E",
+          "#202628",
+          "#3C4445",
+          "#5B6365",
+          "#7C8486",
+          "#9EA7A9",
+          "#C2CBCD",
+          "#E7F0F2"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#8A9496",
+        "tonalRamp": [
+          "#060D0E",
+          "#1F2728",
+          "#3B4446",
+          "#5A6365",
+          "#7B8486",
+          "#9DA7A9",
+          "#C1CBCD",
+          "#E6F1F3"
+        ]
+      },
+      "dim": {
+        "role": "neutral",
+        "displayName": "Dim",
+        "canonical": "#5C6668",
+        "tonalRamp": [
+          "#050D0E",
+          "#1E2729",
+          "#3B4446",
+          "#596365",
+          "#7A8587",
+          "#9CA7A9",
+          "#C0CCCE",
+          "#E5F1F3"
+        ]
+      },
+      "phosphor-blue": {
+        "role": "primary",
+        "displayName": "Phosphor Blue",
+        "canonical": "#63C8EC",
+        "tonalRamp": [
+          "#000E2B",
+          "#002C4B",
+          "#004C6B",
+          "#006D8E",
+          "#1E8FB2",
+          "#4DB3D7",
+          "#74D8FD",
+          "#9AFFFF"
+        ]
+      },
+      "software-green": {
+        "role": "secondary",
+        "displayName": "Software Green",
+        "canonical": "#7DD88F",
+        "tonalRamp": [
+          "#001600",
+          "#003400",
+          "#00540F",
+          "#0A7532",
+          "#3C9853",
+          "#61BC75",
+          "#86E298",
+          "#ACFFBC"
+        ]
+      },
+      "infra-violet": {
+        "role": "secondary",
+        "displayName": "Infra Violet",
+        "canonical": "#A99BFF",
+        "tonalRamp": [
+          "#130041",
+          "#280663",
+          "#432D87",
+          "#614FAB",
+          "#8171D1",
+          "#A395F8",
+          "#C6B9FF",
+          "#EBDFFF"
+        ]
+      },
+      "hardware-coral": {
+        "role": "secondary",
+        "displayName": "Hardware Coral",
+        "canonical": "#E8836F",
+        "tonalRamp": [
+          "#2F0000",
+          "#530000",
+          "#771C0C",
+          "#9D3F2F",
+          "#C3624F",
+          "#EA8571",
+          "#FFA994",
+          "#FFCEB8"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name on the home page. One instance per site."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Post and project titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles and section headings inside prose."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running prose, capped at 68ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Every piece of metadata in the system: dates, tags, statuses, spec keys, nav, counts."
+      }
+    },
+    "shadows": [
+      {
+        "name": "nav-underline",
+        "value": "0 6px 0 -5px var(--accent)",
+        "purpose": "Not depth. The system's only box-shadow, used to draw a 1px accent underline beneath the active nav item. No shadow in this system conveys elevation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hover-illuminate",
+        "value": "border-color 120ms ease",
+        "purpose": "The system's only transition. Hover changes light, never geometry: no translate, scale, or shadow."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation-duration: 0.01ms; transition-duration: 0.01ms",
+        "purpose": "Applied globally under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-figure",
+        "value": "1000px"
+      },
+      {
+        "name": "rail-collapse",
+        "value": "860px"
+      },
+      {
+        "name": "stack",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Domain Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Marks a project's category. Hue is reserved for category and never used for state.",
+      "html": "<span class=\"ds-chip ds-chip--software\"><i class=\"ds-chip__dot\"></i>Software</span>",
+      "css": ".ds-chip { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid var(--line-hi, #2D373A); border-radius: 2px; padding: 3px 7px; color: var(--muted, #8A9496); white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; } .ds-chip__dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex: none; } .ds-chip--software { color: var(--sw, #7DD88F); border-color: color-mix(in srgb, var(--sw, #7DD88F) 34%, var(--line, #1F2629)); }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "chip-status-active",
+      "description": "State by luminance, never hue: active is brightest, planned is dimmest.",
+      "html": "<span class=\"ds-chip ds-status--active\"><i class=\"ds-chip__dot\"></i>Active</span> <span class=\"ds-chip ds-status--planned\"><i class=\"ds-chip__dot\"></i>Planned</span>",
+      "css": ".ds-chip { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid var(--line-hi, #2D373A); border-radius: 2px; padding: 3px 7px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; } .ds-chip__dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex: none; } .ds-status--active { color: var(--text, #E3E8E9); border-color: var(--line-hi, #2D373A); } .ds-status--planned { color: var(--dim, #5C6668); border-color: var(--line, #1F2629); }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A project that exists. Category hue rides the 2px left rule; hover illuminates the border and moves nothing.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card__top\"><h3 class=\"ds-card__title\">ferry</h3><span class=\"ds-card__slug\">/projects/ferry</span></div><p class=\"ds-card__body\">An L4/L7 edge router and load balancer in Go.</p><div class=\"ds-card__foot\">Go · eBPF · gRPC</div></article>",
+      "css": ".ds-card { border: 1px solid var(--line, #1F2629); border-left: 2px solid var(--sw, #7DD88F); background: var(--surface, #111517); border-radius: 2px; padding: 17px 17px 15px; display: flex; flex-direction: column; gap: 10px; transition: border-color 120ms ease; max-width: 340px; } .ds-card:hover { border-color: var(--line-hi, #2D373A); border-left-color: var(--sw, #7DD88F); } .ds-card__top { display: flex; align-items: baseline; gap: 10px; } .ds-card__title { font-family: var(--cond, 'IBM Plex Sans Condensed', 'IBM Plex Sans', ui-sans-serif, sans-serif); font-weight: 600; font-size: 20px; margin: 0; color: var(--text, #E3E8E9); } .ds-card__slug { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 11px; color: var(--dim, #5C6668); margin-left: auto; } .ds-card__body { color: var(--muted, #8A9496); font-size: 13.5px; line-height: 1.55; margin: 0; font-family: var(--sans, 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif); } .ds-card__foot { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 11px; color: var(--dim, #5C6668); }"
+    },
+    {
+      "name": "Spec Row",
+      "kind": "custom",
+      "description": "The signature component. Dot-leader key/value rows; the most identifying element in the system.",
+      "html": "<dl class=\"ds-spec\"><div class=\"ds-spec__row\"><dt class=\"ds-spec__k\">Language</dt><i class=\"ds-spec__ld\"></i><dd class=\"ds-spec__v\">Go 1.25</dd></div><div class=\"ds-spec__row\"><dt class=\"ds-spec__k\">Data plane</dt><i class=\"ds-spec__ld\"></i><dd class=\"ds-spec__v\">XDP / eBPF</dd></div><div class=\"ds-spec__row\"><dt class=\"ds-spec__k\">Nodes</dt><i class=\"ds-spec__ld\"></i><dd class=\"ds-spec__v\">6</dd></div></dl>",
+      "css": ".ds-spec { display: flex; flex-direction: column; gap: 7px; margin: 0; max-width: 320px; } .ds-spec__row { display: flex; align-items: baseline; font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 12px; } .ds-spec__k { color: var(--muted, #8A9496); letter-spacing: 0.06em; text-transform: uppercase; font-size: 10.5px; white-space: nowrap; margin: 0; } .ds-spec__ld { flex: 1; border-bottom: 1px dotted var(--line-hi, #2D373A); margin: 0 8px; transform: translateY(-3px); min-width: 12px; } .ds-spec__v { color: var(--text, #E3E8E9); text-align: right; font-variant-numeric: tabular-nums; margin: 0; }"
+    },
+    {
+      "name": "Section Header",
+      "kind": "custom",
+      "description": "Label, derived count, and a rule flexing to the edge. Counts come from a query; sections are never numbered.",
+      "html": "<div class=\"ds-shead\"><span class=\"ds-shead__lbl\">Currently building</span><span class=\"ds-shead__cnt\">3</span><i class=\"ds-shead__rule\"></i><a class=\"ds-shead__more\" href=\"#\">All projects →</a></div>",
+      "css": ".ds-shead { display: flex; align-items: center; gap: 12px; } .ds-shead__lbl { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text, #E3E8E9); } .ds-shead__cnt { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 11px; color: var(--muted, #8A9496); font-variant-numeric: tabular-nums; } .ds-shead__rule { flex: 1; height: 1px; background: var(--line, #1F2629); } .ds-shead__more { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted, #8A9496); text-decoration: none; } .ds-shead__more:hover { color: var(--accent, #63C8EC); }"
+    },
+    {
+      "name": "Dense Row",
+      "kind": "custom",
+      "description": "Backlog and stream rows. Same data as a card at a tenth the visual weight, so unstarted work never competes with work that exists.",
+      "html": "<div class=\"ds-rows\"><div class=\"ds-row\"><i class=\"ds-row__d\"></i><span class=\"ds-row__sl\">respawn</span><span class=\"ds-row__tg\">Kubernetes operator for game servers.</span><span class=\"ds-row__st\">Planned</span><span class=\"ds-row__ef\">L</span></div><div class=\"ds-row\"><i class=\"ds-row__d ds-row__d--inf\"></i><span class=\"ds-row__sl\">bootstrap</span><span class=\"ds-row__tg\">Bare metal to a running cluster in one command.</span><span class=\"ds-row__st\">Planned</span><span class=\"ds-row__ef\">L</span></div></div>",
+      "css": ".ds-rows { display: flex; flex-direction: column; } .ds-row { display: grid; grid-template-columns: 8px 120px 1fr auto auto; gap: 14px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--line, #1F2629); } .ds-row:first-child { border-top: 1px solid var(--line, #1F2629); } .ds-row__d { width: 6px; height: 6px; border-radius: 50%; background: var(--sw, #7DD88F); } .ds-row__d--inf { background: var(--inf, #A99BFF); } .ds-row__sl { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 12.5px; color: var(--text, #E3E8E9); } .ds-row__tg { font-family: var(--sans, 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif); font-size: 13px; color: var(--muted, #8A9496); line-height: 1.45; } .ds-row__st { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim, #5C6668); } .ds-row__ef { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 10px; color: var(--dim, #5C6668); border: 1px solid var(--line, #1F2629); border-radius: 2px; padding: 2px 6px; min-width: 26px; text-align: center; }"
+    },
+    {
+      "name": "Filter Link",
+      "kind": "nav",
+      "refersTo": "filter-link",
+      "description": "Domain filters. Real static routes, not query strings, so filtering works with no JavaScript. Selected state is the one place the accent fills a surface.",
+      "html": "<nav class=\"ds-filters\"><a class=\"ds-filter ds-filter--on\" href=\"#\">All <span class=\"ds-filter__n\">19</span></a><a class=\"ds-filter\" href=\"#\">Software <span class=\"ds-filter__n\">9</span></a><a class=\"ds-filter\" href=\"#\">Infra <span class=\"ds-filter__n\">5</span></a></nav>",
+      "css": ".ds-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; } .ds-filter { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--line-hi, #2D373A); border-radius: 2px; padding: 5px 10px; color: var(--muted, #8A9496); display: inline-flex; gap: 7px; align-items: center; text-decoration: none; } .ds-filter:hover { color: var(--text, #E3E8E9); } .ds-filter__n { color: var(--dim, #5C6668); font-variant-numeric: tabular-nums; } .ds-filter--on { color: var(--bg, #0A0C0D); background: var(--accent, #63C8EC); border-color: var(--accent, #63C8EC); } .ds-filter--on .ds-filter__n { color: color-mix(in srgb, var(--bg, #0A0C0D) 62%, var(--accent, #63C8EC)); } .ds-filter:focus-visible { outline: 2px solid var(--accent, #63C8EC); outline-offset: 2px; }"
+    },
+    {
+      "name": "Callout",
+      "kind": "custom",
+      "refersTo": "callout",
+      "description": "Aside inside prose. The 2px left rule names the kind: accent for note, coral for warn, violet for gotcha.",
+      "html": "<aside class=\"ds-callout ds-callout--gotcha\"><span class=\"ds-callout__label\">Where I expect to be wrong</span><p class=\"ds-callout__body\">Atomic map swap. I am assuming the backend table can be replaced without a window where in-flight connections hash somewhere new.</p></aside>",
+      "css": ".ds-callout { border: 1px solid var(--line, #1F2629); border-left: 2px solid var(--accent, #63C8EC); background: var(--surface, #111517); border-radius: 2px; padding: 14px 16px; display: flex; flex-direction: column; gap: 7px; max-width: 520px; } .ds-callout--warn { border-left-color: var(--hw, #E8836F); } .ds-callout--gotcha { border-left-color: var(--inf, #A99BFF); } .ds-callout__label { font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #63C8EC); } .ds-callout--warn .ds-callout__label { color: var(--hw, #E8836F); } .ds-callout--gotcha .ds-callout__label { color: var(--inf, #A99BFF); } .ds-callout__body { font-family: var(--sans, 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif); font-size: 15px; color: var(--text-body, #C6CFD1); line-height: 1.65; margin: 0; }"
+    },
+    {
+      "name": "Terminal Block",
+      "kind": "custom",
+      "description": "Shell transcript. Prompt in accent, command in text, output muted. The title bar carries the literal component name.",
+      "html": "<div class=\"ds-term\"><div class=\"ds-term__bar\"><span class=\"ds-term__tag\">&lt;Term&gt;</span><span>attaching the program</span></div><pre class=\"ds-term__pre\"><code><span class=\"ds-term__pr\">$ </span><span class=\"ds-term__cmd\">ferry attach --iface enp3s0</span>\n<span class=\"ds-term__out\">attached enp3s0 (mode: native)</span></code></pre></div>",
+      "css": ".ds-term { border: 1px solid var(--line, #1F2629); border-radius: 2px; background: var(--surface, #111517); overflow: hidden; max-width: 520px; } .ds-term__bar { display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: var(--surface-2, #171C1E); border-bottom: 1px solid var(--line, #1F2629); font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim, #5C6668); } .ds-term__tag { color: var(--muted, #8A9496); } .ds-term__pre { margin: 0; padding: 14px 16px; overflow-x: auto; font-family: var(--mono, 'IBM Plex Mono', ui-monospace, Menlo, monospace); font-size: 13px; line-height: 1.65; color: var(--text-body, #C6CFD1); } .ds-term__pr { color: var(--accent, #63C8EC); } .ds-term__cmd { color: var(--text, #E3E8E9); } .ds-term__out { color: var(--muted, #8A9496); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Instrument Panel",
+    "overview": "The site reads as a well-built readout for its own subject. Every mark on the page either carries information or separates information from other information; nothing is present because a page felt empty without it. The reference is test equipment and engineering documentation rather than a blog template — dot-leader spec sheets, status that means something, counts derived rather than written, and dense rows where most sites would reach for cards.\n\nThe system is committed to a single dark world with cool, slightly blue-biased neutrals. The bias is load-bearing: it ground and accent sit in the same cool family, so the accent reads as light emitted by the surface rather than as paint applied on top of it. Depth is conveyed entirely by surface steps and hairlines — there is not one real shadow in the system, and adding one would break its logic rather than merely look different.\n\nThe discipline that makes it work is that colour is never decorative. Three orthogonal channels each carry exactly one meaning, so nothing has to do double duty and no colour on screen is ambiguous. The confirmed anti-reference is warm near-black with an amber or orange accent: an earlier revision used exactly that and read as another company's brand rather than as this one's instrument.",
+    "keyCharacteristics": [
+      "Cool near-black ground with a single phosphor-blue accent reserved for interaction",
+      "Prose in sans, every piece of metadata in tracked-out uppercase monospace",
+      "One corner radius (2px) and one border weight (1px) across the entire system",
+      "Zero shadows; depth from surface steps and hairlines only",
+      "Hover illuminates a border, never moves, lifts, or scales anything",
+      "Dot-leader spec tables and derived counts as recurring structural devices"
+    ],
+    "rules": [
+      {
+        "name": "The Three Channels Rule",
+        "section": "colors",
+        "body": "Colour carries exactly three meanings and they never overlap: hue = category (software / infra / hardware), luminance = state (active is brightest, planned is dimmest), accent = interaction. If a new element needs to signal something that is not one of those three, it does not get a colour."
+      },
+      {
+        "name": "The Accent Diet Rule",
+        "section": "colors",
+        "body": "Phosphor Blue appears on links inside prose, focus rings, the wordmark full stop, the selected filter chip, and a shell prompt. That list is exhaustive. It was previously also on section counts, devlog entry numbers, and every inline code span; that much accent turned a colour that should mean \"you can act on this\" into texture."
+      },
+      {
+        "name": "The Reading-Surface Rule",
+        "section": "colors",
+        "body": "Index links — card titles, row titles, section actions — are monochrome at rest and take the accent only on hover. The accent is a reading-surface device, not a general \"this is clickable\" paint. This is a deliberate choice: it keeps indexes quiet and dense. The cost is real and accepted — on a touch device no colour signals what is tappable outside an article."
+      },
+      {
+        "name": "The Status Has No Hue Rule",
+        "section": "colors",
+        "body": "active, shipped, maintained, archived and planned are distinguished by brightness and by their own label text, never by colour. An indicator that is lit or unlit is how instruments show state, and it leaves hue free to mean category everywhere on the page."
+      },
+      {
+        "name": "The Split Rule",
+        "section": "typography",
+        "body": "Prose is sans; every piece of metadata is monospace, uppercase, and tracked out. Dates, tags, statuses, spec keys, section headers, nav, counts, effort badges. This single split does more visual work than any decoration in the system, and it is the first thing to preserve in any new component."
+      },
+      {
+        "name": "The Tracking Inversion Rule",
+        "section": "typography",
+        "body": "Type tracks out as it gets smaller and in as it gets larger: mono labels run +0.06em to +0.16em, display runs -0.025em. Uppercase mono at 10px is unreadable without the extra space; a 72px condensed heading falls apart with it."
+      },
+      {
+        "name": "The Tabular Rule",
+        "section": "typography",
+        "body": "Any digits that stack in a column — dates, counts, spec values, reading times, devlog numbers — use font-variant-numeric: tabular-nums. Ragged figures in a column read as a bug in a system that otherwise aligns everything."
+      },
+      {
+        "name": "The 68ch Rule",
+        "section": "layout",
+        "body": "Running prose never exceeds 68 characters, whatever the container is doing. The instrument styling stops at the article edge; reading is not a place to be clever."
+      },
+      {
+        "name": "The Rail Promotion Rule",
+        "section": "layout",
+        "body": "When a two-column detail page collapses, the metadata rail moves above the prose, not below it. A spec sheet is what a reader came for; burying it under 2,000 words is a mobile afterthought, and this system decides it up front."
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "section": "elevation",
+        "body": "No box-shadow, no filter: drop-shadow, no backdrop-filter, ever. If an element needs to separate from its background, it gets a surface step or a hairline. This is an invariant, not a preference — a single soft shadow would make every hairline in the system look like an omission."
+      },
+      {
+        "name": "The Illumination Rule",
+        "section": "elevation",
+        "body": "Hover changes light, never geometry. The card hover is border-color over 120ms and nothing else: no translateY, no scale, no shadow, no background change. Instruments respond by lighting up."
+      },
+      {
+        "name": "The One Radius Rule",
+        "section": "shapes",
+        "body": "2px, everywhere, plus 50% for status dots. Any third radius is a defect."
+      },
+      {
+        "name": "The Reserved Weight Rule",
+        "section": "shapes",
+        "body": "A 2px border means \"this is a category\" and a dotted border means \"this is a spec leader.\" Neither is available for decoration, because both are read as information by anyone who has been on the site for thirty seconds."
+      }
+    ],
+    "dos": [
+      "Do put every piece of metadata in uppercase mono with positive tracking, and every piece of prose in sans. The Split Rule is the system.",
+      "Do derive counts, entry numbers, and reading times from the content, and render them in tabular figures.",
+      "Do use a surface step or a hairline when something needs to separate from its background.",
+      "Do reach for a dense row before a card when the content is a list of things.",
+      "Do keep hover to a border-color change over 120ms.",
+      "Do let the category hue appear only as a 2px left rule and a chip.",
+      "Do cap running prose at 68ch even when the container is wider."
+    ],
+    "donts": [
+      "Don't add a shadow, a drop-shadow, or a backdrop-filter. Not one, not subtle.",
+      "Don't move, lift, scale, or translate anything on hover.",
+      "Don't introduce a third border radius, or any radius other than 2px and the 50% status dot.",
+      "Don't use Phosphor Blue for anything that is not interactive. It is not an emphasis colour, a heading colour, or a decorative colour — including a highlighted word in a heading, which is why .hl is scoped to the wordmark alone.",
+      "Don't give status a hue. Brightness plus the label text carries it.",
+      "Don't number section headers, or add eyebrow markers that encode nothing.",
+      "Don't put images on cards or indexes. Images belong on project pages and inside post bodies, where they carry information.",
+      "Don't reintroduce a warm near-black ground or an amber/orange accent. That combination is the system's confirmed anti-reference."
+    ]
+  }
+}

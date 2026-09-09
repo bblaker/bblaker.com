@@ -24,8 +24,8 @@
        hue       = category  (software / infra / hardware)
        luminance = state     (active is brightest, planned is dimmest)
        accent    = interaction, and nothing else                        */
-  --accent:    #7DD88F;   /* phosphor green: links, focus, the mark */
-  --sw:        #63C8EC;   /* software */
+  --accent:    #63C8EC;   /* phosphor blue: links, focus, the mark */
+  --sw:        #7DD88F;   /* software */
   --inf:       #A99BFF;   /* infra */
   --hw:        #E8836F;   /* hardware */
 
@@ -155,7 +155,7 @@ footer.foot .links a { font-family: var(--mono); font-size: 11px; letter-spacing
    Four descending levels, each doing different work. */
 .hero-name { font-family: var(--cond); font-weight: 700; font-size: clamp(40px, 8vw, 72px); line-height: 0.95; letter-spacing: -0.025em; }
 .hero-claim { font-family: var(--cond); font-weight: 600; font-size: clamp(21px, 3.2vw, 31px); line-height: 1.22; letter-spacing: -0.008em; max-width: 26ch; color: var(--text); }
-.hero .hl { color: var(--accent); }
+.hero-name .hl { color: var(--accent); }
 .hero .sub { color: var(--muted); max-width: 56ch; font-size: 16.5px; }
 .hero .statusline { font-family: var(--mono); font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--dim); display: flex; flex-wrap: wrap; gap: 6px 10px; padding-top: 6px; }
 .hero .statusline b { color: var(--muted); font-weight: 400; }
@@ -266,8 +266,7 @@ footer.foot .links a { font-family: var(--mono); font-size: 11px; letter-spacing
 .post-wrap { max-width: var(--measure); margin: 0 auto; padding: 42px 0 0; }
 .post-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .post-meta .sep { color: var(--line-hi); }
-.post-meta .p { color: var(--sw); }
-.post-meta .p:hover { color: var(--sw); }
+.post-meta .p { color: var(--accent); }
 .post-wrap h1 { font-family: var(--cond); font-weight: 700; font-size: clamp(28px, 4.6vw, 42px); line-height: 1.06; letter-spacing: -0.012em; margin: 14px 0 16px; }
 .post-lede { color: var(--muted); font-size: 17px; line-height: 1.6; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 

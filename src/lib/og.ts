@@ -21,8 +21,8 @@ const C = {
   text: '#E3E8E9',
   muted: '#8A9496',
   dim: '#5C6668',
-  accent: '#7DD88F',
-  software: '#63C8EC',
+  accent: '#63C8EC',
+  software: '#7DD88F',
   infra: '#A99BFF',
   hardware: '#E8836F',
 } as const;

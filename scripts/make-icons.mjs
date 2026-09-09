@@ -14,7 +14,7 @@ const cond = await readFile(resolve('src/assets/fonts/plex-cond-700.ttf'));
 
 const BG = '#0A0C0D';
 const INK = '#E3E8E9';
-const ACCENT = '#7DD88F';
+const ACCENT = '#63C8EC';
 
 /** @param {number} size */
 const mark = (size) => ({
