@@ -6,13 +6,13 @@ status: active
 effort: M
 started: 2026-09-09
 weight: 95
-stack: [TypeScript, React, Cloudflare Workers, Workers KV]
+stack: [TypeScript, React, Cloudflare Workers, D1]
 tags: [typescript, react, cloudflare, invoicing, consulting]
 spec:
   - { k: Users, v: "1" }
   - { k: Frontend, v: React }
   - { k: Runtime, v: Cloudflare Workers }
-  - { k: Storage, v: Workers KV }
+  - { k: Storage, v: Cloudflare D1 (SQLite) }
   - { k: Scope, v: "Clients, time, invoices, reconciliation" }
 ---
 
@@ -41,18 +41,49 @@ work is a question I intend to answer honestly in the devlog.
 
 ## The stack
 
-React on the front, Cloudflare Workers on the back, Workers KV for storage. Static
-frontend, edge runtime, no server to keep alive and nothing to patch on a Sunday. For an
-app with one user and a few hundred records a year, that's about as much infrastructure
-as the problem deserves.
+React on the front, Cloudflare Workers on the back, D1 for storage. Static frontend, edge
+runtime, no server to keep alive and nothing to patch on a Sunday. For an app with one
+user and a few hundred records a year, that's about as much infrastructure as the problem
+deserves.
 
-<Callout kind="gotcha" title="Where I expect to be wrong">
-KV. It's a key-value store: eventually consistent, no secondary indexes, and list
-operations that get awkward past a certain size. Invoicing wants exactly the queries it's
-worst at — every unpaid invoice for a client, every time entry between two dates, the
-running total against a retainer. I'll either end up hand-rolling index keys until I've
-built a bad database, or moving to D1 and admitting SQL was the right answer for tabular
-financial records. Writing the prediction down so the devlog can hold me to it.
+## Why D1 and not KV
+
+I started out planning to use Workers KV, because it's the obvious default on this
+platform and the data looked simple enough. It isn't, and the reasons are worth writing
+down.
+
+**The data is relational, and pretending otherwise costs more than the schema does.**
+Clients have engagements, engagements have time entries, invoices have line items drawn
+from those entries, and payments settle against invoices. That's five tables and four
+foreign keys. It is not a shape you store as blobs and hope.
+
+**The queries *are* the application.** What's unpaid and for how long. Hours by client by
+month. Everything billable between two dates that isn't already on an invoice. How much
+of a retainer is left. Every one of those is a `WHERE`, a `GROUP BY` and a `SUM` — one
+line of SQL each, and in KV every one becomes a key layout I have to design, maintain,
+and keep consistent by hand. That path ends at a worse database than the one I'd have got
+for free.
+
+**No transactions is the real disqualifier.** Issuing an invoice writes the invoice,
+writes its line items, and marks a batch of time entries as billed. If that isn't atomic,
+the failure mode is billing a client twice for the same hour, or dropping hours entirely.
+For financial records, "usually consistent" is not a tradeoff, it's a defect.
+
+**And read-your-writes matters here.** KV is eventually consistent — a write can take up
+to a minute to propagate. Log an hour, look at today's total, and see the old number, and
+I will not trust the tool again.
+
+The case *for* KV is throughput at edge scale, which is a real and genuinely impressive
+benefit that this app will never once collect. One user. A few thousand rows a year.
+SQLite is so far inside its comfort zone here that the interesting engineering is
+entirely elsewhere.
+
+<Callout kind="note" title="What this costs">
+D1 is regional with read replication rather than genuinely everywhere, so the "identical
+at every edge" property goes away. For one user in one place, that's not a cost I can
+even measure. The real one is schema migrations — a known problem with known tooling,
+which is exactly why I'd rather own it than own a hand-rolled index scheme with no tools
+at all.
 </Callout>
 
 ## What done looks like

@@ -79,7 +79,7 @@ written down than reconstructed.
 reconciliation. Nothing else.
 
 - **domain** software · **status** active · **effort** M
-- **stack** TypeScript, React, Cloudflare Workers, Workers KV
+- **stack** TypeScript, React, Cloudflare Workers, D1
 
 The interesting content is not the CRUD, it's the build-vs-buy maths having moved. The
 good tools are priced for agencies and carry features that will never be opened; the
@@ -87,12 +87,13 @@ cheap ones are rigid exactly where it hurts. Building the replacement was never 
 several weekends before, and now it is — which is a claim worth testing in public rather
 than asserting.
 
-Storage is the live technical question: KV is eventually consistent with no secondary
-indexes, and invoicing wants precisely the queries it handles worst.
+Storage settled on D1 rather than KV, and the reasoning is on the page: the data is
+relational, the queries are the application, and issuing an invoice needs to be atomic or
+it double-bills. KV's edge-scale throughput is a benefit this app will never collect.
 
-**Devlog seeds:** the build-vs-buy maths, recalculated · four features and no fifth ·
-hand-rolling index keys until I've built a bad database · moving to D1 and admitting SQL
-was right · what an invoice actually needs to contain · resisting the fifth feature.
+**Devlog seeds:** the build-vs-buy maths, recalculated · four features and no fifth · why
+D1 and not KV · the schema, and what an invoice actually needs to contain · migrations on
+a database with one user · resisting the fifth feature.
 
 ## pi-tower
 
