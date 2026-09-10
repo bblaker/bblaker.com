@@ -20,7 +20,7 @@ Effort is evenings-and-weekends: **S** ≈ a weekend · **M** ≈ a few weeks ·
 | Slug | Domain | State | Effort | One line |
 |---|---|---|---|---|
 | [ferry](#ferry) | software | REAL | L | Go L4/L7 edge router and load balancer |
-| [punchline](#punchline) | software | REAL | M | Consulting time cards and invoicing, built for one user |
+| [punchline](#punchline) | software | REAL · shipped | M | Consulting time cards and invoicing, built for one user |
 | [pi-tower](#pi-tower) | infra | REAL | XL | Six Pi 5s running k3s in a printed rack |
 | [printers](#printers) | hardware | REAL | XL | The fleet, and keeping it running |
 | [drift](#drift) | software | CARRIED | M | Terraform drift detection that pages only on surprises |
@@ -78,18 +78,19 @@ written down than reconstructed.
 **Consulting time cards and invoicing, for exactly one user.** Clients, time, invoices,
 reconciliation. Nothing else.
 
-- **domain** software · **status** active · **effort** M
+- **domain** software · **status** maintained · **effort** M
 - **stack** TypeScript, React, Cloudflare Workers, D1, MCP
 
-The interesting content is not the CRUD, it's the build-vs-buy maths having moved. The
-good tools are priced for agencies and carry features that will never be opened; the
-cheap ones are rigid exactly where it hurts. Building the replacement was never worth
-several weekends before, and now it is — which is a claim worth testing in public rather
-than asserting.
+Built and in daily use. The interesting content is not the CRUD, it's the build-vs-buy
+maths having moved: the good tools are priced for agencies and carry features that will
+never be opened, the cheap ones are rigid exactly where it hurts, and building the
+replacement was never worth several weekends before. That claim got tested rather than
+asserted, and it held.
 
 Storage settled on D1 rather than KV, and the reasoning is on the page: the data is
 relational, the queries are the application, and issuing an invoice needs to be atomic or
-it double-bills. KV's edge-scale throughput is a benefit this app will never collect.
+it double-bills. KV's edge-scale throughput is a benefit this app was never going to
+collect. In practice D1 held with no surprises.
 
 Next on the list after the core four: a basic MCP server, so time entry happens in a
 sentence rather than a form. Framed as a second interface rather than a fifth feature —

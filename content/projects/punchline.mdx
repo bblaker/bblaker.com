@@ -2,7 +2,7 @@
 title: punchline
 tagline: A consulting time card and invoicing app built for exactly one user. Clients, time, invoices and reconciliation, and nothing else.
 domain: software
-status: active
+status: maintained
 effort: M
 started: 2026-09-09
 weight: 95
@@ -25,22 +25,24 @@ open: approvals, team utilisation dashboards, resource planning, payroll integra
 The affordable ones are affordable because they are rigid, and the rigidity always shows
 up at the exact moment you need to do something slightly unusual with an invoice.
 
-So I'm building the one I want. Four things and no fifth: **client management**, **time
-management**, **invoice tracking**, and **reconciliation**.
+So I built the one I want. Four things and no fifth: **client management**, **time
+management**, **invoice tracking**, and **reconciliation**. It's finished, and it's what
+I use.
 
-## The part that's actually new
+## The part that was actually new
 
-I've wanted this for years and never built it, because the honest cost-benefit never
+I'd wanted this for years and never built it, because the honest cost-benefit never
 worked. A few weekends to replace a subscription I mildly resent is a bad trade,
 especially since the thing I'd build would be worse than what I'd cancel.
 
-That maths has moved. Scaffolding a typed React app, a Workers backend and a schema is
-no longer the expensive part, which means the calculation stops being "is this worth
-several weekends" and becomes "do I know exactly what I want." For this, I do — I've been
+That maths has moved. Scaffolding a typed React app, a Workers backend and a schema is no
+longer the expensive part, which means the calculation stops being "is this worth several
+weekends" and becomes "do I know exactly what I want." For this, I did — I'd been
 describing it to other people's software for a decade and having it say no.
 
 Whether that's a good reason to build software or a very good way to acquire maintenance
-work is a question I intend to answer honestly in the devlog.
+work, I now get to answer from the other side. The status on this page says *maintained*,
+which is the honest answer so far: it works, I use it, and it is mine to keep working.
 
 ## The stack
 
@@ -63,37 +65,37 @@ foreign keys. It is not a shape you store as blobs and hope.
 **The queries *are* the application.** What's unpaid and for how long. Hours by client by
 month. Everything billable between two dates that isn't already on an invoice. How much
 of a retainer is left. Every one of those is a `WHERE`, a `GROUP BY` and a `SUM` — one
-line of SQL each, and in KV every one becomes a key layout I have to design, maintain,
-and keep consistent by hand. That path ends at a worse database than the one I'd have got
-for free.
+line of SQL each, and in KV every one becomes a key layout I'd have to design, maintain,
+and keep consistent by hand. That path ends at a worse database than the one I got for
+free.
 
-**No transactions is the real disqualifier.** Issuing an invoice writes the invoice,
+**No transactions was the real disqualifier.** Issuing an invoice writes the invoice,
 writes its line items, and marks a batch of time entries as billed. If that isn't atomic,
 the failure mode is billing a client twice for the same hour, or dropping hours entirely.
 For financial records, "usually consistent" is not a tradeoff, it's a defect.
 
 **And read-your-writes matters here.** KV is eventually consistent — a write can take up
-to a minute to propagate. Log an hour, look at today's total, and see the old number, and
-I will not trust the tool again.
+to a minute to propagate. Log an hour, look at today's total, see the old number, and I'd
+never trust the tool again.
 
 The case *for* KV is throughput at edge scale, which is a real and genuinely impressive
-benefit that this app will never once collect. One user. A few thousand rows a year.
-SQLite is so far inside its comfort zone here that the interesting engineering is
+benefit that this app was never going to collect. One user. A few thousand rows a year.
+SQLite is so far inside its comfort zone here that the interesting engineering was
 entirely elsewhere.
 
-<Callout kind="note" title="What this costs">
-D1 is regional with read replication rather than genuinely everywhere, so the "identical
-at every edge" property goes away. For one user in one place, that's not a cost I can
-even measure. The real one is schema migrations — a known problem with known tooling,
-which is exactly why I'd rather own it than own a hand-rolled index scheme with no tools
+<Callout kind="note" title="It held">
+Nothing about this bit me. D1 is regional with read replication rather than genuinely
+everywhere, and for one user in one place that difference has never once been
+measurable. Migrations are the thing I now own, which is a known problem with known
+tooling — still the trade I'd take over owning a hand-rolled index scheme with no tools
 at all.
 </Callout>
 
 ## Next: drive it from a prompt
 
-A basic MCP server, so the whole thing is reachable from a Claude prompt. This is next on
-the list, and it is deliberately not a fifth feature — it's a second interface to the four
-that already exist.
+The core four are done and in daily use. Next on the list is a basic MCP server, so the
+whole thing is reachable from a Claude prompt — deliberately not a fifth feature, but a
+second interface to the four that already exist.
 
 The argument for it is sitting in my own success criterion below: *log an hour in under
 five seconds*. No form achieves that. Opening a tab, finding the client, picking the
@@ -119,8 +121,10 @@ expectations and my own books. The first version gets reads and time entry only.
 Invoicing stays behind the UI until I've watched the thing behave for a few months.
 </Callout>
 
-## What done looks like
+## What done meant
 
-I can log an hour in under five seconds, generate an invoice without editing anything by
-hand, and tell at a glance what's owed and how long it's been owed. If it does that, it's
-finished, and I will resist every feature that suggests itself afterwards.
+Log an hour in under five seconds. Generate an invoice without editing anything by hand.
+Tell at a glance what's owed and how long it's been owed.
+
+That was the bar, and it's the bar the thing now clears. What's left is the discipline
+part: every week it suggests a fifth feature, and every week the answer is no.
