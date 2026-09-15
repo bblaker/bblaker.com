@@ -1,0 +1,118 @@
+---
+title: Your documentation has a new reader
+date: 2026-09-15
+kind: essay
+draft: true
+summary: Docs used to be read by a new hire in their first week. Now they're read by an agent on every task, and that changes what good documentation actually looks like.
+tags: [documentation, ai, architecture, astro]
+---
+
+Documentation has always had a measurable readership and it has always been terrible.
+A new engineer reads it once, in week one, while they have no context to evaluate any of
+it. After that almost nobody opens it again, because by month two you ask a person
+instead. That was the honest lifecycle, and it's why docs rotted quietly: the cost of
+them being wrong landed months later, on someone with no standing to complain.
+
+That readership has changed, and not gradually. In a codebase an agent is working in,
+the docs are read on every single task. Not skimmed once and abandoned. Read, cited,
+and acted on, dozens of times a day, by something that will do exactly what they say.
+
+This is the largest change to the economics of documentation in my career, and most of
+the conversation about it is stuck on the wrong half. The interesting part is not that
+AI can now write your docs. It's that AI now *reads* them, which means a doc site has
+quietly become an interface, and interfaces have different rules than prose.
+
+## What changes when the reader is a machine
+
+A human reader is a forgiving parser. They resolve ambiguity from context, notice when a
+page smells out of date, and know to check the code when something reads wrong. Every one
+of those behaviours is doing silent repair work on your documentation, and you have been
+benefiting from it for years without paying for it.
+
+An agent does none of that repair. It reads what is written, takes it as current, and
+proceeds. Ambiguity that a person would resolve correctly becomes a coin flip. A stale
+statement that a person would eyeball and distrust becomes a confident wrong action three
+steps later.
+
+So the properties that make documentation good have shifted. Not reversed, but shifted,
+and toward things that were previously matters of taste:
+
+**Explicit over narrative.** "As described above, the ledger consumes these events" is
+fine for a person reading top to bottom. It is useless to something that retrieved this
+one section. State the fact where it is used, even when that means saying it twice.
+
+**Addressable and stable.** Agents cite sections and come back to them. Heading anchors
+that change when you reword a title break every reference anyone stored. Stable anchors
+are now an API contract, and should be treated with the same reluctance to break.
+
+**Available as source.** Rendered HTML is for humans. The markdown behind it is better
+for everything else, and serving both costs you nothing on a static site. Same for a root
+`llms.txt`, the emerging convention for pointing a model at what matters:
+
+```
+# Ledger Service
+> Double-entry ledger. Owns account balances. Publishes settlement events.
+
+## Docs
+- [Architecture](/architecture.md): bounded context, ownership, what it does not own
+- [Events](/events.md): published and consumed contracts, with versioning rules
+- [API](/api.md): HTTP surface, auth, idempotency semantics
+```
+
+There is a Starlight plugin that will emit that for you, and if you would rather not take
+the dependency it is a short integration to write yourself.
+
+**Negative space stated out loud.** This is the one almost nobody does, and it matters
+more than everything above. Write down what the service does *not* own, what it does
+*not* publish, and what it deliberately does not handle. A gap in documentation is not
+read as a gap. It is read as an invitation, and the model fills it with the most plausible
+thing, which is frequently a design you rejected two years ago for good reasons.
+
+## The generation half
+
+This is where the enthusiasm is, and it is warranted. Pointing a model at a real codebase
+and asking for a documentation site produces something genuinely usable in hours, not
+weeks. Service boundaries, message contracts, API signatures, the actual call graph rather
+than the one on the wiki from 2023. It is very good at this, because all of it is derivable
+from code that is right there.
+
+Astro Starlight is a good target for the output: static, markdown-native, and the source
+files are the artifact rather than a database you have to export. You get a site that is
+pleasant for people and trivially consumable by everything else, from the same content.
+
+But I want to be precise about what has actually become cheap, because it is easy to
+overclaim.
+
+<Callout kind="warn" title="Generated docs are a photograph">
+What got cheap is *producing* documentation. What kills documentation is *drift*, and
+nothing about cheap generation touches that. A doc site generated once is a photograph of
+a system that has already moved. If regeneration is not wired into CI, you have not solved
+your documentation problem, you have made it cheaper to produce stale docs faster. And
+stale docs are worse now than they used to be, because the new reader will not
+second-guess them.
+</Callout>
+
+The other limit is sharper. A model can derive what the code does. It cannot derive why.
+It can tell you the billing service publishes `InvoiceSettled` and not `PaymentReceived`.
+It cannot tell you that you tried the second one, discovered it coupled two teams'
+deploy schedules together, and pulled it back out. That decision, the option you rejected,
+and the constraint that forced it, exist nowhere in the source.
+
+Which is the useful reframing. Generation collapsing the cost of the *what* layer does not
+make documentation a solved problem. It clears away the tedious half and leaves the half
+that was always the valuable one, and now there is no excuse for not writing it.
+
+## Two readers, one discipline
+
+The thing I did not expect is that writing for the second reader improves the docs for the
+first.
+
+Every property above (say it explicitly, state it where it is used, name what you do not
+own, keep the anchors stable) is something a good technical writer would already have told
+you to do. They were just easy to skip, because a human reader would paper over the gap and
+you would never find out. The agent does not paper over anything. It fails visibly,
+immediately, and in a way that is traceable back to the sentence that caused it.
+
+That is the best feedback loop documentation has ever had. Docs used to fail silently,
+months later, for someone who assumed the problem was them. Now they fail in front of you,
+on a Tuesday, in a way you can fix.
