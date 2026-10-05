@@ -1,0 +1,138 @@
+---
+title: Correcting assumptions
+date: 2026-10-05
+kind: log
+draft: false
+project: ferry
+summary: The first real round of code against the three guesses from the last entry. One correction, one wrong in the good direction, one still open.
+tags: [go, ebpf, xdp, networking]
+---
+
+Last entry I wrote down three places I expected to be wrong, and promised that if the
+map swap needed `BPF_MAP_TYPE_ARRAY_OF_MAPS`, this would be a correction. It does, so
+it is.
+
+First, what exists. The control plane builds Maglev tables and programs them into BPF
+maps. The XDP program parses the packet, finds the service, picks a backend through
+conntrack or the table, and counts it. Then it returns `XDP_PASS`. Nothing is
+rewritten or forwarded yet: ferry currently makes every decision and acts on none of
+them. That's useful for checking the decisions, but it isn't a load balancer.
+
+## The correction: the swap needs the indirection
+
+My worry last time was in-flight connections hashing somewhere new during a swap. That
+turned out to be the wrong worry. In-flight connections are conntrack's job: an
+established flow never consults the table, so it doesn't care what happens to it.
+
+The flows that do care are *new* ones that arrive mid-swap. A Maglev table here is
+16,381 slots. Rewriting it in place, even with a batch update, isn't atomic, so for a
+moment a SYN can hash into a table that is half old and half new. Usually that's
+harmless, because both halves name live backends. But if the update removed a backend,
+some of the old slots point at something that's gone, and that SYN falls through to a
+kernel that has never heard of the VIP.
+
+So each service gets its own inner array, and the outer map holds one pointer per
+service:
+
+```c
+struct maglev_inner {
+	__uint(type, BPF_MAP_TYPE_ARRAY);
+	__uint(max_entries, MAGLEV_SIZE);   // 16381, prime
+	__type(key, __u32);
+	__type(value, __u32);               // backend id
+};
+
+struct {
+	__uint(type, BPF_MAP_TYPE_ARRAY_OF_MAPS);
+	__uint(max_entries, MAX_SERVICES);
+	__type(key, __u32);                 // service id
+	__array(values, struct maglev_inner);
+} maglev_tables SEC(".maps");
+```
+
+A swap builds the new table off to the side, then replaces the pointer with a single
+map update:
+
+```go
+func (x *XDP) SetService(key ServiceKey, id uint32, slots []uint32) error {
+	inner, err := ebpf.NewMap(x.innerSpec)
+	// ...
+	defer inner.Close()
+
+	if _, err := inner.BatchUpdate(keys, slots, nil); err != nil {
+		// ...
+	}
+	// Table first, then the service entry, so a VIP never resolves to an
+	// empty slot.
+	if err := x.objs.MaglevTables.Put(id, inner); err != nil {
+		// ...
+	}
+	return x.objs.Services.Put(toServiceKey(key), id)
+}
+```
+
+A program that already looked up the old table keeps using it until it returns. The
+kernel frees the old table only after an RCU grace period, so no packet ever reads a
+torn table. The cost is one extra map lookup per new flow; established flows skip it.
+
+The swap is only half of it. The other half is the order of operations, which turned
+out to be where most of the actual thinking went:
+
+1. Mark every backend the new tables reference as active.
+2. Swap each changed service's table.
+3. Delete services that disappeared.
+4. Mark backends that are no longer referenced as inactive. Don't delete them.
+
+Step 4 is what lets in-flight connections survive a backend going away. A conntrack
+entry pointing at an inactive backend falls back to the current table instead of being
+forwarded into nothing. Backend IDs are handed out round-robin and aren't reused until
+the allocator wraps, so a stale entry can't silently land on a new backend that
+inherited its ID.
+
+<Callout kind="note" title="How much Maglev actually moves">
+With 10 backends, removing one forces its 1,638 slots to move. Everything else that
+moved: 72 slots, about 0.4% of the table. There's a test that holds that number under
+2%.
+</Callout>
+
+The `Populate` sketch from last time survived mostly intact, with one change: it no
+longer precomputes every backend's permutation. At 16,381 slots and 100 backends,
+that's several megabytes allocated on every endpoint change, on a Pi, to save a
+multiply and a modulo. Each permutation entry is now computed when the loop reaches it.
+
+## Wrong in the good direction: there's no loop
+
+I expected the conntrack path to need a loop and the verifier to argue about its bound.
+It doesn't have one. Conntrack is a single LRU hash lookup keyed by the 5-tuple. A hit
+on an active backend is the fast path. A miss, or a hit on an inactive backend, falls
+through to one table lookup. Where I'd pictured scanning for a replacement backend,
+the inactive flag and the Maglev table already give the answer.
+
+The loop will come back when ferry has to walk TCP options. For now, the verifier's
+only complaint can be something I haven't thought of. It hasn't seen the program yet;
+that's next.
+
+## Still open: where L7 goes
+
+Nothing in this round pushed the boundary either way. Everything so far is L4 and fits
+comfortably in XDP. The L7 half is still a userspace problem with an unknown front door.
+
+## What "native" costs on a Pi
+
+One thing I didn't write down last time: native XDP is a property of the NIC driver,
+not the kernel. The Pi 5's onboard port uses the `macb` driver. Its XDP support was on
+its sixth revision on netdev in March 2026, and as far as I can tell it isn't merged.
+The 2.5GbE card uses `igc`, which has had native XDP for years.
+
+So ferry attaches to `igc`, and `--mode xdp-native` is now strict. It asks for driver
+mode explicitly and fails if the driver can't do it. The alternative was silently
+falling back to generic XDP, which runs after the kernel has already allocated an skb.
+That gives up most of what the project claims, quietly. A load balancer that's supposed
+to be honest about its costs shouldn't do that.
+
+## Next
+
+The verifier gets its turn, then the forwarding decision. Full NAT means the backends,
+which are pods, need no changes. The price is that return traffic comes back through
+ferry. DSR is faster but asks every pod to own the VIP. I'm leaning NAT, and expecting
+to be wrong about something in it.
