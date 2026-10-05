@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+"""
+Measure the writing tells that make a draft read as machine-written.
+
+    python3 scripts/slopcheck.py content/posts/*.mdx
+
+None of this is a rule. It's a diff against my own published voice, which sits
+around: 30-60 contractions per 1k words, one rule-of-three per post, zero
+meta-commentary, mean sentence 12-15 words, 23-38% of sentences under nine
+words. A draft well outside that band usually reads wrong before I can say why.
+"""
 import re, sys, statistics as st
 from collections import Counter
 
