@@ -9,9 +9,9 @@ tags: [mcp, agents, ai, invoicing, punchline]
 ---
 
 Punchline is a time card and invoicing app I built for exactly one user. It works, I use
-it, and the obvious next step is an MCP server so that logging time happens in a sentence
-instead of a form. The backend is already a Worker with a typed data layer, so exposing it
-is a thin surface rather than a second implementation. An afternoon, maybe.
+it daily, and the obvious next step is an MCP server so that logging time happens in a
+sentence instead of a form. The backend's already a Worker with a typed data layer, so
+exposing it is thin. An afternoon, maybe.
 
 I sketched the tool list in about four minutes:
 
@@ -25,101 +25,93 @@ markPaid(invoiceId, amount, date)     <-
 voidInvoice(invoiceId)                <-
 ```
 
-Then I sat and looked at the last three for a while, because something was wrong with them
-and it took me an embarrassing amount of time to say what.
+Then I stared at the last three for a lot longer than that, because something was off
+about them and I couldn't say what.
 
-It is not that they are writes. `logTime` is a write. It is not that they are
-destructive, because `voidInvoice` is the only one that removes anything and it is the
-least alarming of the three. And it is certainly not that they are harder to build. They
-are the same amount of code as the rest. That is exactly why I nearly shipped them: by
-every measure I was actually applying, they looked identical to the tools above them.
+They're writes, sure. So is `logTime`. Only one of them destroys anything, and
+`voidInvoice` is honestly the least worrying of the three. They aren't harder to build
+either: same handlers, same amount of code. Which is the problem. By every measure I was
+actually applying, they looked exactly like the four above them.
 
 ## The test is who finds out
 
-Here is the distinction I landed on, and I think it generalises well past invoicing.
+Log ninety minutes to the wrong client and it's my problem. I'll catch it, or I won't and
+the month comes out slightly wrong, and either way it's a ten second fix. The mistake
+starts and ends inside a database I own. Nobody else ever knows it happened.
 
-**Log ninety minutes to the wrong client.** That is my problem. I notice it, or I don't
-and the monthly total looks slightly off, and either way I fix it in ten seconds. The
-error begins and ends inside a database I own. Nobody else ever knows it happened.
+Issue an invoice to the wrong client and it's *theirs*. It's in their inbox. Depending on
+the client it's also in their AP system and forwarded to an accountant who's never heard
+of me and now has a question. I can't unsend it. I can apologise, and the apology is the
+bit they'll remember.
 
-**Issue an invoice to the wrong client.** That is *their* problem now. It is in their
-inbox. Depending on the client it is also in their AP system, in a shared folder, or
-forwarded to an accountant who has never heard of me and now has a question. I cannot
-unsend it. I can only apologise for it, and the apology is the artifact they remember.
+Those two aren't different in degree. They're different in kind, and what separates them
+has nothing to do with reads or writes or how much code sits behind the call:
 
-Those two failures are not different in degree. They are different in kind, and the thing
-that separates them has nothing to do with reads, writes, or how much code sits behind the
-call. It is this:
+> When this goes wrong, who finds out, and do they hear it from me?
 
-> When this goes wrong, who finds out, and do they find out from me?
+If the answer's "me, from myself", automate it and stop thinking about it. If it's
+"someone else, before I know", that's a different category of operation and it earns a
+different level of ceremony.
 
-If the answer is "me, from myself", automate it freely. If the answer is "someone else,
-before I know about it", that is a different category of operation and it deserves a
-different level of ceremony. Everything downstream follows from that one question.
+## Reversibility is the wrong question
 
-## Reversibility is the wrong frame
+The instinct is to ask whether a thing is reversible. Sounds rigorous. It isn't, because
+it's quietly asking about the database.
 
-The instinct is to reach for "is it reversible", and it sounds rigorous. It isn't,
-because it quietly asks about the database.
+I can delete an invoice from D1 in forty milliseconds. I can't delete it from someone's
+inbox, or from their memory of the time I billed them twice. The database isn't where the
+consequence lives. Anything that leaves my systems is irreversible in the only sense that
+matters, however clean the rollback looks.
 
-I can delete an invoice from D1 in about forty milliseconds. I cannot delete it from
-someone's expectations, their inbox, or their recollection that I once billed them twice.
-The database is not where the consequence lives. Anything that leaves my systems is
-irreversible in the only sense that matters, no matter how clean the rollback is.
-
-That reframing covers more than invoices. Sending email, opening a pull request against a
-shared repo, posting to a channel, deploying, filing a ticket that pages someone. All of
-them are cheap to undo technically and impossible to undo socially, and it is the second
-one that decides whether a thing should happen because a sentence was parsed correctly.
+Which covers a lot more ground than invoicing. Sending email. Opening a PR against a
+shared repo. Deploying. Filing the ticket that pages someone at 3am. All of them are cheap
+to undo technically and none of them are undoable socially, and it's the second part that
+should decide whether they happen because a sentence parsed correctly.
 
 ## "Just add a confirmation step"
 
-This is the obvious objection and I want to take it seriously, because I believe it does
-less work than it appears to.
+The obvious objection, and I think it does less work than it looks like it does.
 
-A confirmation prompt is useful when the thing it interrupts is unexpected. In an agent
-loop it is almost never unexpected. I asked for this. I am in flow. The model has just
-told me, fluently and plausibly, what it is about to do and why that is the right call.
-The confirm button is the path of least resistance and I will press it, because pressing
-it is how I continue doing the thing I asked for.
+Confirmation prompts earn their keep when the thing they interrupt is unexpected. In an
+agent loop it's never unexpected. I asked for this. I'm mid-flow. The model has just
+explained, fluently, what it's about to do and why that's the right call. Clicking confirm
+is how I carry on doing the thing I asked for, so I'll click it.
 
-We already know this about deterministic software. Everyone has clicked through a dialog
-they did not read. The version where the dialog comes attached to a confident, articulate
-justification is not an improvement on that, and I would rather not find out how many
-times I can be convinced before I stop reading.
+We already know this about ordinary software. Everyone's clicked through a dialog they
+didn't read. Bolting a confident, well-argued justification onto that dialog isn't an
+improvement, and I'd rather not find out how many times I can be talked round before I
+stop reading them altogether.
 
-So the confirmation stays, but it is not load-bearing. The actual control is that the
-capability is not there.
+So the confirmation stays. It's just not the control. The control is that the capability
+isn't there.
 
 ## What ships
 
-Reads, and `logTime`. That is the whole first version.
+Reads, and `logTime`. That's version one.
 
-Issuing invoices, marking them paid, and voiding them stay behind the UI, where I have to
-open a tab, see the client name next to the amount, and click a button that only does
-that one thing. That is maybe fifteen seconds of friction a handful of times a month.
+Invoicing stays behind the UI, where I open a tab, see the client's name next to the
+amount, and click a button that does exactly one thing. Call it fifteen seconds, a handful
+of times a month.
 
-I want to be precise that this friction is not a failure to finish the integration. It is
-the integration. Opening the tab *is* the control, and fifteen seconds is the cheapest
-insurance I will ever buy against a conversation that begins "hey, quick question about
-this invoice."
+That friction isn't a failure to finish the integration. It *is* the integration. Opening
+the tab is the control, and fifteen seconds is the cheapest insurance I'll ever buy
+against a conversation that starts "hey, quick question about this invoice".
 
-## The part that costs me
+## What it costs me
 
-I should be honest that this is not a free decision, because the operations with
-consequences are exactly the operations worth automating.
+None of this is free, and the annoying part is that the operations with consequences are
+exactly the ones worth automating.
 
-"Invoice everyone for last month" is a twenty minute task I would genuinely love to
-collapse into a sentence. It is the single most valuable thing an agent could do in this
-app, and it is the one thing I am refusing it. The cheap automation is the stuff that only
-touches me. I am aware that I have drawn the line precisely around the valuable part.
+"Invoice everyone for last month" is a twenty minute job I'd love to collapse into a
+sentence. It's the most valuable thing an agent could do in this app, and it's the one
+thing I'm refusing it. The automation I've kept is the automation that only touches me.
+I've drawn the line right around the good bit, and I know it.
 
-I am also aware that "for now" is doing real work in all of this. I expect to move the
-line. I will probably start with `createInvoice` producing a draft that I still have to
-release by hand, which keeps the generation automated and the sending human, and that is
-likely where it settles for a long time.
+"For now" is doing real work in all of this, too. I'll move the line eventually. My guess
+is `createInvoice` ends up producing a draft that I still have to release by hand, which
+automates the generation and keeps the sending human, and that's probably where it sits
+for a long time.
 
-But I wanted the starting position written down, by date, before I had any experience to
-rationalise with. Everyone is publishing what they connected their agent to. Almost nobody
-is publishing what they decided not to, and the second list is the one that reflects
-whether you thought about it at all.
+But I wanted the starting position on the record, dated, before I had any experience to
+rationalise with. Everyone's publishing what they hooked their agent up to. I haven't seen
+many people publish the other list.
